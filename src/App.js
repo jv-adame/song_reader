@@ -26,7 +26,6 @@ class App extends Component {
       searchResults: initial,
       percentage: percentage,
       moving: false,
-      id: 0
     }
  //  this.setTone = this.setTone.bind(this);
    this.setEmotion = this.setEmotion.bind(this);
