@@ -12,7 +12,7 @@ const express = require('express'),
 
 
 
-app.use(function(req, res, next) {
+app.use((req, res, next)=> {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
@@ -81,14 +81,10 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
       headers: {
         "Authorization": "Bearer " + genius.token
       }
-
     })
-
-
-    //if statement searchResults[i].result.primary_artist.name.toLowerCase() === searchArtist.toLowerCase()
     .then(function(response){
       let searchResults = response.data.response.hits;
-      let found = {};
+      let found;
       for(i = 0; i < searchResults.length; i++)
       {
           //return the object where the title and artist match the search term's
@@ -97,22 +93,35 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
             found = searchResults[i].result; 
           }
       }
-    
-      //Logic bomb: why doesn't "i" === "i"?
+
+      //Kendrick Lamar Logic bomb: why doesn't "i" === "i"?
       let logic = (searchResults[0].result.title.toString() === searchSong.toString()) ? true : false;
 
-      //Get this on the chrome console
       let show = {
         searched: searchSong,
         first: searchResults[0].result.title,
         logic: logic,
         found: found 
       }
-      
-      console.log("Aiming for url", found.url);
-      //must be case for found.url undefined
 
-      //lyric scraping
+      //If specific artist/song combination cannot be found in genius.com do something
+      //Flesh out more to alter emotionReader client side
+      if(!found || !found.url)
+      {
+        let placeholder = [
+          {score: 0.7},
+          {score: 0.7},
+          {score: 0.7},
+          {score: 0.7},
+          {score: 0.7}
+        ]
+
+        console.log(show);
+        res.send(placeholder);
+      }
+      //otherwise commence analysis
+      else
+      {
         axios.get(found.url)
         .then((response)=>{
           const fill = [];
@@ -133,7 +142,7 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
             .replace(/\s/g, " ");
 
         console.log("Here are the lyrics for: "+ searchSong, lyrics)
-        //Lyric Analysis
+          //Watson Lyric Analysis
           axios.get("https://"+ watson.user +":"+ watson.pass +"@gateway.watsonplatform.net/tone-analyzer/api/v3/tone?version=2016-05-19&text=" + lyrics, {   
             header: "X-Watson-Learning-Opt-Out: true"      
           })
@@ -146,69 +155,17 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
       })
     .catch((error)=>{
       console.log(error);
-    })
+    })      
+      }
+
   })
   .catch(function(error){ 
     let json = CircularJSON.stringify(error);
     console.log(error);
     res.send(json);
   })
-
-  //promises
 })
 
-
-
-
-//This will get replaced by Genius.com API call
-// app.get("/tone/:index", (req, res)=>{
-//     let index = parseInt(req.params.index);
-//     let lyrics = "";
-
-//     if(index === 0){
-//       lyrics = sampleJSON.songs[0].text;
-//     }  
-//     if(index === 1){
-//       lyrics = sampleJSON.songs[1].text;
-//     }
-//     if(index === 2){
-//       lyrics = sampleJSON.songs[2].text;
-//     }
-//     if(index === 3){
-//       lyrics = sampleJSON.songs[3].text;
-//     }
-//     if(index === 4){
-//       lyrics = sampleJSON.songs[4].text;
-//     }
-//     if(index === 5){
-//       lyrics = sampleJSON.songs[5].text;
-//     }
-//     if(index === 6){
-//       lyrics = sampleJSON.songs[6].text;
-//     }
-//     if(index === 7){
-//       lyrics = sampleJSON.songs[7].text;
-//     }
-
-//       axios.get("https://"+ watson.user +":"+ watson.pass +"@gateway.watsonplatform.net/tone-analyzer/api/v3/tone?version=2016-05-19&text=" + lyrics, {   
-//         header: "X-Watson-Learning-Opt-Out: true"
-    
-//     })
-//       .then( (response)=> {
-//         //How to get the first item of the tone categories
-
-//         //res.send(response.data.document_tone.tone_categories[0]);
-
-//         //How to get the entire .json object
-//         res.send(response.data.document_tone.tone_categories[0].tones);
-//       //  res.send(response.data.document_tone.tone_categories)
-//       })
-//       .catch( (error)=> {
-//         console.log(error);
-//       });
-
-
-// })
 
 //Listener
 app.listen(8080, ()=> {

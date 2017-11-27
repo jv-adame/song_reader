@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import axios from "axios";
-import Tones from "./tones";
 import spiral from "./spiral.svg";
 import SongsList from "./components/songsList";
 import AudioPlayer from "./components/audioPlayer";
@@ -13,14 +12,13 @@ import SearchList from "./components/searchList";
 import SearchBar from "./components/searchBar";
 import config from "./config";
 import circularJSON from "circular-json";
-
+//Default colors and percentages on startup
 const color = ["#DE0017", "#375E29", "#562786", "#FBD500", "#276DB4"];
 const percentage = [20, 20, 20, 20, 20];
 const initial = [];
 class App extends Component {
   constructor(){
     super();
-
 
     this.state ={
       emotion: initial,
@@ -84,36 +82,6 @@ class App extends Component {
         console.log(error);
       })
   }
-  /*
-  Takes lyrics to call the Tone Analyzer API, will get numbers based on emotional content of lyrics
-  */
-  // setTone(index){
-  //   //this axios call will go towards a Genius.com API call
-  // //  let baseURL = "http://localhost:8080/tone/" + index;
- 
-  //   let toneArray = [];
-  //   let p = axios.get("http://localhost:8080/tone/" + index);
-  //   p.then((result)=>{
-  //     //Turn data into percentages
-  //     for (let i = 0; i < result.data.length; i++)
-  //     {
-  //       toneArray.push(Math.ceil(result.data[i].score*100));
-  //     }
-  //     //Put both of these in promises
-  //     this.setEmotion(toneArray);
-  //     this.setColor(toneArray);
-
-  //     //change state to play song based on id
-  //     this.onPlay(index);
-
-  //   });
-  //   p.catch((error)=>{
-  //     console.log(error);
-  //   });
-    
-  // }
-
-
 
   //Set Emotion State
   setEmotion(array){
@@ -123,7 +91,6 @@ class App extends Component {
   }
 
   //Assign colours based on intensity of respective emotion
-  //Color can be "" if at not high enough rating
   setColor(colorList){
     /*
         0: Anger
@@ -152,7 +119,6 @@ class App extends Component {
     }
     //disgust index 1
     if (colorList[1] < 30){
-     // copy[1] = "white";
      copy[1] = "#82B252";
     }
     else if (colorList[0] >= 30 && colorList[1] < 45)
