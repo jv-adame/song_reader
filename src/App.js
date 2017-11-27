@@ -76,6 +76,13 @@ class App extends Component {
   //Pass arguments to Genius API call
   inputTone(song, artist){
       console.log("song:", song + " artist:", artist);
+      axios.get("http://localhost:8080/lyrics/" + song + "/" + artist)
+      .then((result)=>{
+        console.log(result.data);
+      })
+      .catch((error)=>{
+        console.log(error);
+      })
   }
   /*
   Takes lyrics to call the Tone Analyzer API, will get numbers based on emotional content of lyrics

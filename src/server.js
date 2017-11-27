@@ -72,7 +72,56 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
 
   console.log(searchSong, searchArtist);
   //axios call
+  axios({
+    url: "http://api.genius.com/search?q=" + searchSong + " " + searchArtist,
+    method: "get",
+    params: {
+      "Accept": "application/json",
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    headers: {
+      "Authorization": "Bearer " + genius.token
+    }
 
+  })
+
+
+  //if statement searchResults[i].result.primary_artist.name.toLowerCase() === searchArtist.toLowerCase()
+  .then(function(response){
+    console.log(response.data.response.hits[0].result.primary_artist.name);
+    let searchResults = response.data.response.hits;
+    let found = {};
+    for(i = 0; i < searchResults.length; i++)
+    {
+        if(searchResults[0].result.title.toString().toLowerCase() === searchSong.toString().toLowerCase() && searchResults[i].result.primary_artist.name.toLowerCase() === searchArtist.toLowerCase())
+        {
+          found = searchResults[i]; 
+        }
+    }
+    console.log("search artist is:", searchArtist);
+    console.log("search song is:", searchSong);
+    console.log("first result is:", searchResults[0].result.title);
+  
+    //Logic bomb: why doesn't "i" === "i"?
+    let logic = (searchResults[0].result.title === searchSong) ? true : false;
+    console.log("logic", logic);
+    console.log("found is", found);
+    
+
+    let show = {
+      searched: searchSong,
+      first: searchResults[0].result.title,
+      logic: logic 
+    }
+    res.send(show);
+    //let json = CircularJSON.stringify(response);
+    //res.send(json);
+  })
+  .catch(function(error){ 
+    let json = CircularJSON.stringify(error);
+    console.log(error);
+    res.send(json);
+  })
 
   //promises
 })
