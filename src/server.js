@@ -1,6 +1,7 @@
 
 const axios = require("axios");
 const sampleJSON = require("./lyrics.json");
+const CircularJSON = require("circular-json");
 const config = require("./config"),
     watson = config.watson_api_key;
     spotify = config.spotify_api_key;
@@ -16,36 +17,65 @@ app.use(function(req, res, next) {
     next();
   });
 
-
-
+//Display list of songs via the search function
 app.get("/search/:query", (req, res)=>{
-  // let search = req.params.query;
+  let search = req.params.query;
 
-  
-  axios.post("https://accounts.spotify.com/api/token",    {
-
-    params:{
-      grant_type: "client_credentials"
+  //Spotify Authorization
+  axios({
+    url: 'https://accounts.spotify.com/api/token',
+    method: 'post',
+    params: {
+      grant_type: 'client_credentials'
+    },
+    headers: {
+      'Accept':'application/json',
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    auth: {
+      username: spotify.user,
+      password: spotify.pass
     }
-},
-{
-  headers : 
-  {
-      "Content-Type" : "application/x-www-form-urlencoded", // WTF!
-      "Authorization" : "Basic " + new Buffer(spotify.user+":"+spotify.pass).toString('base64')
-  }
-})
-  .then((response)=>{
-    console.log(response);
-    res.send(response);
-  })
-  .catch((err)=>{
-    console.log(err);
-    res.send(err);
-  })
-})
+  }).then(function(authorized) {
+    //Receiving data to pass to app
+    axios({
+      url: "https://api.spotify.com/v1/search?q=" + search + "&type=track",
+      method: "get",
+      params: {
+        "Accept": "application/json",
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      headers: {
+        "Authorization": "Bearer " + authorized.data.access_token
+      }
+
+    })
+    .then(function(response){
+      let json = CircularJSON.stringify(response.data.tracks);
+      res.send(json);
+    })
+    .catch(function(error){ 
+      let json = CircularJSON.stringify(error);
+      res.send(json);
+    })
 
 
+  }).catch(function(error) {
+  });
+});
+
+//Genius API call
+app.get("/lyrics/:song/:artist", (req,res)=>{
+  let searchSong = req.params.song;
+  let searchArtist = req.params.artist;
+
+
+  console.log(searchSong, searchArtist);
+  //axios call
+
+
+  //promises
+})
 
 
 
@@ -84,7 +114,7 @@ app.get("/tone/:index", (req, res)=>{
         header: "X-Watson-Learning-Opt-Out: true"
     
     })
-      .then(function (response) {
+      .then( (response)=> {
         //How to get the first item of the tone categories
 
         //res.send(response.data.document_tone.tone_categories[0]);
@@ -93,7 +123,7 @@ app.get("/tone/:index", (req, res)=>{
         res.send(response.data.document_tone.tone_categories[0].tones);
       //  res.send(response.data.document_tone.tone_categories)
       })
-      .catch(function (error) {
+      .catch( (error)=> {
         console.log(error);
       });
 

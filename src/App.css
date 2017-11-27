@@ -26,11 +26,21 @@
 .flexContainer{
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  width: 30%;
-  margin: 0 auto;
+  justify-content: flex-start;
+
 }
 
+.flexColumn{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin: 0 auto;
+  display: inline-block;
+  text-align: left;
+}
+.musicBox{
+  width: 50%;
+}
 /*CSS Animation*/
 .spin{
   animation: App-logo-spin infinite 20s linear;
@@ -73,4 +83,10 @@
 }
 .Sadness{
   color: #325FC6;
+}
+
+/*Search Results*/
+
+.albumCover{
+  width: 100px;
 }

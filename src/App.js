@@ -10,7 +10,9 @@ import Animation from "./components/animation";
 import EmotionReader from "./components/emotionReader";
 import NowPlaying from "./components/nowPlaying";
 import SearchList from "./components/searchList";
+import SearchBar from "./components/searchBar";
 import config from "./config";
+import circularJSON from "circular-json";
 
 const color = ["#DE0017", "#375E29", "#562786", "#FBD500", "#276DB4"];
 const percentage = [20, 20, 20, 20, 20];
@@ -23,6 +25,7 @@ class App extends Component {
     this.state ={
       emotion: initial,
       color: color,
+      searchResults: initial,
       percentage: percentage,
       moving: false,
       id: 0
@@ -33,20 +36,50 @@ class App extends Component {
    this.onPause = this.onPause.bind(this);
    this.playCurrent = this.playCurrent.bind(this);
    this.search = this.search.bind(this);
+   this.inputTone = this.inputTone.bind(this);
   }
 
-  /*
-  Takes lyrics to call the Tone Analyzer API, will get numbers based on emotional content of lyrics
-  */
+
 
 
 
   //Populate based on search query
-  search(){
-
+  search(query){
+    axios.get("http://localhost:8080/search/" + query)
+    .then((result)=>{
+      console.log(result.data.items[0]);
+      let queryResults = []
+      for (let i = 0; i < result.data.items.length; i++)
+      {
+        let entry = {
+          name: result.data.items[i].name,
+          artists: result.data.items[i].album.artists[0].name,
+          album: result.data.items[i].album.name,
+          albumCover: result.data.items[i].album.images[0].url,
+          id: result.data.items[i].id,
+          url: result.data.items[i].external_urls.spotify,
+          uri: result.data.items[i].uri,
+          duration: result.data.items[i].duration_ms
+        }
+        queryResults.push(entry);
+      }
+        console.log(queryResults);
+      this.setState({
+        searchResults: queryResults
+      });      
+    })
+    .catch((error)=>{
+      console.log(error);
+    })
   }
 
-
+  //Pass arguments to Genius API call
+  inputTone(song, artist){
+      console.log("song:", song + " artist:", artist);
+  }
+  /*
+  Takes lyrics to call the Tone Analyzer API, will get numbers based on emotional content of lyrics
+  */
   setTone(index){
     //this axios call will go towards a Genius.com API call
   //  let baseURL = "http://localhost:8080/tone/" + index;
@@ -237,7 +270,8 @@ class App extends Component {
          <Animation color={this.state.color} percentage={this.state.percentage}/>
          <NowPlaying songs={this.props.songs} moving={this.state.moving} id={this.state.id}/>
          <EmotionReader emotion={this.state.emotion} moving={this.state.moving}/>
-         {/* <SearchList setTone={this.setTone} onPause={this.onPause} /> */}
+         <SearchBar search={this.search} />
+         <SearchList setTone={this.setTone} onPause={this.onPause} searchResults={this.state.searchResults} inputTone={this.inputTone}/>
          <SongsList songs={this.props.songs} setTone={this.setTone} onPause={this.onPause} />
          <AudioPlayer songId={this.state.id}  songs={this.props.songs} onPause={this.onPause}/>
       </div>
