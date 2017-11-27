@@ -14,10 +14,9 @@ class EmotionReader extends Component{
             {emotion = "Joy"}
             if (index === 4)
             {emotion = "Sadness"}
-            
-            let show = (this.props.moving) ? "block" : "none";
+
             return(
-              <div style={{display:show}}>
+              <div>
                 <div>
                   {emotion}:
                 </div>

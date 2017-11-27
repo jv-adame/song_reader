@@ -2,6 +2,7 @@
 const axios = require("axios");
 const sampleJSON = require("./lyrics.json");
 const CircularJSON = require("circular-json");
+const cheerio = require("cheerio");
 const config = require("./config"),
     watson = config.watson_api_key;
     spotify = config.spotify_api_key;
@@ -69,53 +70,83 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
   let searchSong = req.params.song;
   let searchArtist = req.params.artist;
 
+  //axios authorization call
+    axios({
+      url: "http://api.genius.com/search?q=" + searchSong + " " + searchArtist,
+      method: "get",
+      params: {
+        "Accept": "application/json",
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      headers: {
+        "Authorization": "Bearer " + genius.token
+      }
 
-  console.log(searchSong, searchArtist);
-  //axios call
-  axios({
-    url: "http://api.genius.com/search?q=" + searchSong + " " + searchArtist,
-    method: "get",
-    params: {
-      "Accept": "application/json",
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    headers: {
-      "Authorization": "Bearer " + genius.token
-    }
-
-  })
+    })
 
 
-  //if statement searchResults[i].result.primary_artist.name.toLowerCase() === searchArtist.toLowerCase()
-  .then(function(response){
-    console.log(response.data.response.hits[0].result.primary_artist.name);
-    let searchResults = response.data.response.hits;
-    let found = {};
-    for(i = 0; i < searchResults.length; i++)
-    {
-        if(searchResults[0].result.title.toString().toLowerCase() === searchSong.toString().toLowerCase() && searchResults[i].result.primary_artist.name.toLowerCase() === searchArtist.toLowerCase())
-        {
-          found = searchResults[i]; 
-        }
-    }
-    console.log("search artist is:", searchArtist);
-    console.log("search song is:", searchSong);
-    console.log("first result is:", searchResults[0].result.title);
-  
-    //Logic bomb: why doesn't "i" === "i"?
-    let logic = (searchResults[0].result.title === searchSong) ? true : false;
-    console.log("logic", logic);
-    console.log("found is", found);
+    //if statement searchResults[i].result.primary_artist.name.toLowerCase() === searchArtist.toLowerCase()
+    .then(function(response){
+      let searchResults = response.data.response.hits;
+      let found = {};
+      for(i = 0; i < searchResults.length; i++)
+      {
+          //return the object where the title and artist match the search term's
+          if(searchResults[i].result.title.toLowerCase().toString() === searchSong.toLowerCase().toString() && searchResults[i].result.primary_artist.name.toLowerCase() === searchArtist.toLowerCase())
+          {
+            found = searchResults[i].result; 
+          }
+      }
     
+      //Logic bomb: why doesn't "i" === "i"?
+      let logic = (searchResults[0].result.title.toString() === searchSong.toString()) ? true : false;
 
-    let show = {
-      searched: searchSong,
-      first: searchResults[0].result.title,
-      logic: logic 
-    }
-    res.send(show);
-    //let json = CircularJSON.stringify(response);
-    //res.send(json);
+      //Get this on the chrome console
+      let show = {
+        searched: searchSong,
+        first: searchResults[0].result.title,
+        logic: logic,
+        found: found 
+      }
+      
+      console.log("Aiming for url", found.url);
+      //must be case for found.url undefined
+
+      //lyric scraping
+        axios.get(found.url)
+        .then((response)=>{
+          const fill = [];
+          let $ = cheerio.load(response.data);
+
+          //Hacky way of being thorough, can't properly eliminate [Chorus] and [Post-Chorus]for some reason
+          //Also to not give Watson a tonne of white space
+        let lyrics = $(".lyrics").text()
+            .replace("[Verse 1]", "")
+            .replace("[Verse 2]", "")
+            .replace("[Verse 3]", "")
+            .replace("[Chorus]", "")
+            .replace("[Bridge]", "")
+            .replace("[Post-Chorus]", "")
+            .replace("[Coda]", "")
+            .replace("[Hook]", "")
+            .replace("[Outro]", "")
+            .replace(/\s/g, " ");
+
+        console.log("Here are the lyrics for: "+ searchSong, lyrics)
+        //Lyric Analysis
+          axios.get("https://"+ watson.user +":"+ watson.pass +"@gateway.watsonplatform.net/tone-analyzer/api/v3/tone?version=2016-05-19&text=" + lyrics, {   
+            header: "X-Watson-Learning-Opt-Out: true"      
+          })
+          .then( (response)=> {
+            res.send(response.data.document_tone.tone_categories[0].tones);
+          })
+        .catch((error)=> {
+          console.log(error);
+        });
+      })
+    .catch((error)=>{
+      console.log(error);
+    })
   })
   .catch(function(error){ 
     let json = CircularJSON.stringify(error);
@@ -130,54 +161,54 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
 
 
 //This will get replaced by Genius.com API call
-app.get("/tone/:index", (req, res)=>{
-    let index = parseInt(req.params.index);
-    let lyrics = "";
+// app.get("/tone/:index", (req, res)=>{
+//     let index = parseInt(req.params.index);
+//     let lyrics = "";
 
-    if(index === 0){
-      lyrics = sampleJSON.songs[0].text;
-    }  
-    if(index === 1){
-      lyrics = sampleJSON.songs[1].text;
-    }
-    if(index === 2){
-      lyrics = sampleJSON.songs[2].text;
-    }
-    if(index === 3){
-      lyrics = sampleJSON.songs[3].text;
-    }
-    if(index === 4){
-      lyrics = sampleJSON.songs[4].text;
-    }
-    if(index === 5){
-      lyrics = sampleJSON.songs[5].text;
-    }
-    if(index === 6){
-      lyrics = sampleJSON.songs[6].text;
-    }
-    if(index === 7){
-      lyrics = sampleJSON.songs[7].text;
-    }
+//     if(index === 0){
+//       lyrics = sampleJSON.songs[0].text;
+//     }  
+//     if(index === 1){
+//       lyrics = sampleJSON.songs[1].text;
+//     }
+//     if(index === 2){
+//       lyrics = sampleJSON.songs[2].text;
+//     }
+//     if(index === 3){
+//       lyrics = sampleJSON.songs[3].text;
+//     }
+//     if(index === 4){
+//       lyrics = sampleJSON.songs[4].text;
+//     }
+//     if(index === 5){
+//       lyrics = sampleJSON.songs[5].text;
+//     }
+//     if(index === 6){
+//       lyrics = sampleJSON.songs[6].text;
+//     }
+//     if(index === 7){
+//       lyrics = sampleJSON.songs[7].text;
+//     }
 
-      axios.get("https://"+ watson.user +":"+ watson.pass +"@gateway.watsonplatform.net/tone-analyzer/api/v3/tone?version=2016-05-19&text=" + lyrics, {   
-        header: "X-Watson-Learning-Opt-Out: true"
+//       axios.get("https://"+ watson.user +":"+ watson.pass +"@gateway.watsonplatform.net/tone-analyzer/api/v3/tone?version=2016-05-19&text=" + lyrics, {   
+//         header: "X-Watson-Learning-Opt-Out: true"
     
-    })
-      .then( (response)=> {
-        //How to get the first item of the tone categories
+//     })
+//       .then( (response)=> {
+//         //How to get the first item of the tone categories
 
-        //res.send(response.data.document_tone.tone_categories[0]);
+//         //res.send(response.data.document_tone.tone_categories[0]);
 
-        //How to get the entire .json object
-        res.send(response.data.document_tone.tone_categories[0].tones);
-      //  res.send(response.data.document_tone.tone_categories)
-      })
-      .catch( (error)=> {
-        console.log(error);
-      });
+//         //How to get the entire .json object
+//         res.send(response.data.document_tone.tone_categories[0].tones);
+//       //  res.send(response.data.document_tone.tone_categories)
+//       })
+//       .catch( (error)=> {
+//         console.log(error);
+//       });
 
 
-})
+// })
 
 //Listener
 app.listen(8080, ()=> {
