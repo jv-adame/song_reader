@@ -1,6 +1,5 @@
 
 const axios = require("axios");
-const sampleJSON = require("./lyrics.json");
 const CircularJSON = require("circular-json");
 const cheerio = require("cheerio");
 const config = require("./config"),
