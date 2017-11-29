@@ -26,6 +26,7 @@ class App extends Component {
       searchResults: initial,
       percentage: percentage,
       moving: false,
+      tempo: 0
     }
  //  this.setTone = this.setTone.bind(this);
    this.setEmotion = this.setEmotion.bind(this);
@@ -34,6 +35,7 @@ class App extends Component {
  //  this.playCurrent = this.playCurrent.bind(this);
    this.search = this.search.bind(this);
    this.inputTone = this.inputTone.bind(this);
+   this.tempo = this.setTempo.bind(this);
   }
 
   //Populate based on search query
@@ -51,10 +53,11 @@ class App extends Component {
           id: result.data.items[i].id,
           url: result.data.items[i].external_urls.spotify,
           uri: result.data.items[i].uri,
-          duration: result.data.items[i].duration_ms
+          duration: result.data.items[i].duration_ms,
         }
         queryResults.push(entry);
       }
+      console.log(queryResults);
       this.setState({
         searchResults: queryResults
       });      
@@ -65,17 +68,23 @@ class App extends Component {
   }
 
   //Pass arguments to Genius API call
-  inputTone(song, artist){
-
+  inputTone(song, artist, id){
       axios.get("http://localhost:8080/lyrics/" + song + "/" + artist)
       .then((result)=>{
-        let toneArray = [];
-        for (let i = 0; i < result.data.length; i++)
-        {
-          toneArray.push(Math.ceil(result.data[i].score*100));
-        }
-        this.setEmotion(toneArray);
-        this.setColor(toneArray);
+        axios.get("http://localhost:8080/tempo/" + id)
+        .then((tempo)=>{
+          let toneArray = [];
+          for (let i = 0; i < result.data.length; i++)
+          {
+            toneArray.push(Math.ceil(result.data[i].score*100));
+          }
+          this.setEmotion(toneArray);
+          this.setColor(toneArray);
+        })
+        .catch((error)=>{
+          console.log(error)
+        })
+
       })
       .catch((error)=>{
         console.log(error);
@@ -88,6 +97,13 @@ class App extends Component {
       emotion: array
     });
   }
+  
+  setTempo(input){
+    this.setState({
+      tempo: input
+    })
+  }
+
 
   //Assign colours based on intensity of respective emotion
   setColor(colorList){

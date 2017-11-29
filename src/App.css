@@ -90,3 +90,17 @@
 .albumCover{
   width: 100px;
 }
+
+.transparent{
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  left: 7px;
+  top: 7px;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-size: 24px;
+  background-position: 58% 50%;
+  border-radius: 500px;
+  cursor: pointer;
+}

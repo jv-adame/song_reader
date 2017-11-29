@@ -9,32 +9,11 @@ class searchList extends Component{
         let songData = this.props.searchResults.map((el,i,arr)=>{
             return (
             <div className="musicBox flexContainer">
-                <div>
-                    <a href={this.props.searchResults[i].url}>
-                    <img className="albumCover" src={this.props.searchResults[i].albumCover} /> 
-                    </a>
-                </div>
                 <div className="flexContainer">
-                    <div className="flexColumn">
-                        <div>Title:</div>
-                        <div>Artists:</div>
-                        <div>Album:</div>
-                        {/* <div>Uri: {this.props.searchResults[i].uri}</div> */}
-                    </div>
-                    <div className="flexColumn">
-                        <div>{this.props.searchResults[i].name}</div>
-                        <div>{this.props.searchResults[i].artists}</div>
-                        <div>{this.props.searchResults[i].album}</div>
-                        {/* <div>{this.props.searchResults[i].uri}</div> */}
-                    </div>
-                    <div className="flexColumn">
-                        <button onClick={()=>this.props.inputTone(this.props.searchResults[i].name, this.props.searchResults[i].artists)}>submit</button>
-                        {/* <iframe src="https://open.spotify.com/embed?uri=spotify:track:5JunxkcjfCYcY7xJ29tLai"
-        frameborder="0" allowtransparency="true"></iframe> */}
-
-                        {/* <iframe src={"https://open.spotify.com/embed?uri=spotify:track:" + this.props.searchResults[i].uri}
-        frameborder="0" allowtransparency="true"></iframe> */}
-
+                    <div className="flexColumn">        
+                        <iframe src={"https://open.spotify.com/embed?uri=" + this.props.searchResults[i].uri}
+                            frameorder="0" allowtransparency="true" height="80px" width="100%"></iframe>    
+                        <button onClick={()=>this.props.inputTone(this.props.searchResults[i].name, this.props.searchResults[i].artists, this.props.searchResults[i].id)}>submit</button>
                     </div>
                 </div>
             </div>

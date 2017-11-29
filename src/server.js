@@ -39,7 +39,7 @@ app.get("/search/:query", (req, res)=>{
   }).then(function(authorized) {
     //Receiving data to pass to app
     axios({
-      url: "https://api.spotify.com/v1/search?q=" + search + "&type=track",
+      url: "https://api.spotify.com/v1/search?q=" + search + "&type=track&limit=10",
       method: "get",
       params: {
         "Accept": "application/json",
@@ -51,6 +51,7 @@ app.get("/search/:query", (req, res)=>{
 
     })
     .then(function(response){
+      console.log(response.data);
       let json = CircularJSON.stringify(response.data.tracks);
       res.send(json);
     })
@@ -58,11 +59,64 @@ app.get("/search/:query", (req, res)=>{
       let json = CircularJSON.stringify(error);
       res.send(json);
     })
-
-
   }).catch(function(error) {
   });
 });
+
+
+app.get("/tempo/:id", (req, res)=>{
+  let search = req.params.id;
+
+  //Spotify Authorization
+  axios({
+    url: 'https://accounts.spotify.com/api/token',
+    method: 'post',
+    params: {
+      grant_type: 'client_credentials'
+    },
+    headers: {
+      'Accept':'application/json',
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    auth: {
+      username: spotify.user,
+      password: spotify.pass
+    }
+  }).then(function(authorized) {
+    //Receiving data to pass to app
+    axios({
+      url: "https://api.spotify.com/v1/audio-features/" + search,
+      method: "get",
+      params: {
+        "Accept": "application/json",
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      headers: {
+        "Authorization": "Bearer " + authorized.data.access_token
+      }
+
+    })
+    .then(function(response){
+      console.log(response.data);
+      let pass = {
+        tempo: response.data.tempo,
+        energy: response.data.energy
+      }
+      console.log(pass);
+      let json = CircularJSON.stringify(response.data);
+      res.send(json);
+    })
+    .catch(function(error){ 
+      let json = CircularJSON.stringify(error);
+      res.send(json);
+    })
+  }).catch(function(error) {
+  });
+});
+
+
+
+
 
 //Genius API call
 app.get("/lyrics/:song/:artist", (req,res)=>{
