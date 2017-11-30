@@ -1,4 +1,3 @@
-
 const axios = require("axios");
 const CircularJSON = require("circular-json");
 const cheerio = require("cheerio");
@@ -7,9 +6,10 @@ const config = require("./config"),
     spotify = config.spotify_api_key;
     genius = config.genius_api_key;
 const express = require('express'),
-    app = express();
+    app = express(),
+    PORT = process.env.PORT || 8080;
 
-
+app.use(express.static(__dirname+"/build"))
 
 app.use((req, res, next)=> {
     res.header("Access-Control-Allow-Origin", "*");
@@ -17,7 +17,7 @@ app.use((req, res, next)=> {
     next();
   });
 
-//Display list of songs via the search function
+//Spotify search call
 app.get("/search/:query", (req, res)=>{
   let search = req.params.query;
 
@@ -36,10 +36,10 @@ app.get("/search/:query", (req, res)=>{
       username: spotify.user,
       password: spotify.pass
     }
-  }).then(function(authorized) {
+  }).then((authorized)=>{
     //Receiving data to pass to app
     axios({
-      url: "https://api.spotify.com/v1/search?q=" + search + "&type=track&limit=10",
+      url: "https://api.spotify.com/v1/search?q=" + search + "&type=track&limit=5",
       method: "get",
       params: {
         "Accept": "application/json",
@@ -48,22 +48,20 @@ app.get("/search/:query", (req, res)=>{
       headers: {
         "Authorization": "Bearer " + authorized.data.access_token
       }
-
     })
-    .then(function(response){
-      console.log(response.data);
+    .then((response)=>{
       let json = CircularJSON.stringify(response.data.tracks);
       res.send(json);
     })
-    .catch(function(error){ 
+    .catch((error)=>{ 
       let json = CircularJSON.stringify(error);
       res.send(json);
     })
-  }).catch(function(error) {
+  }).catch((error)=> {
   });
 });
 
-
+//Spotify Audio-Features call
 app.get("/tempo/:id", (req, res)=>{
   let search = req.params.id;
 
@@ -82,7 +80,7 @@ app.get("/tempo/:id", (req, res)=>{
       username: spotify.user,
       password: spotify.pass
     }
-  }).then(function(authorized) {
+  }).then((authorized)=> {
     //Receiving data to pass to app
     axios({
       url: "https://api.spotify.com/v1/audio-features/" + search,
@@ -94,35 +92,28 @@ app.get("/tempo/:id", (req, res)=>{
       headers: {
         "Authorization": "Bearer " + authorized.data.access_token
       }
-
     })
-    .then(function(response){
-      console.log(response.data);
+    .then((response)=>{
       let pass = {
         tempo: response.data.tempo,
         energy: response.data.energy
       }
-      console.log(pass);
-      let json = CircularJSON.stringify(response.data);
+      let json = CircularJSON.stringify(pass);
       res.send(json);
     })
-    .catch(function(error){ 
+    .catch((error)=>{ 
       let json = CircularJSON.stringify(error);
       res.send(json);
     })
-  }).catch(function(error) {
+  }).catch((error)=> {
+      console.log(error);
   });
 });
-
-
-
-
 
 //Genius API call
 app.get("/lyrics/:song/:artist", (req,res)=>{
   let searchSong = req.params.song;
   let searchArtist = req.params.artist;
-
   //axios authorization call
     axios({
       url: "http://api.genius.com/search?q=" + searchSong + " " + searchArtist,
@@ -135,41 +126,68 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
         "Authorization": "Bearer " + genius.token
       }
     })
-    .then(function(response){
+    .then((response)=>{
       let searchResults = response.data.response.hits;
       let found;
       for(i = 0; i < searchResults.length; i++)
       {
-          //return the object where the title and artist match the search term's
-          if(searchResults[i].result.title.toLowerCase().toString() === searchSong.toLowerCase().toString() && searchResults[i].result.primary_artist.name.toLowerCase() === searchArtist.toLowerCase())
+        //query is substring of title
+        let evaluateTitle = searchResults[i].result.title.toLowerCase();  
+        let evaluateArtist = searchResults[i].result.primary_artist.name.toLowerCase();
+        let eSearchSong = searchSong.toLowerCase();
+        let eSearchArtist = searchArtist.toLowerCase();
+        let foundResult = searchResults[i].result;
+
+        //return the object where the title and artist match the search term's. Redundant but readable
+        //There might be some false positives using this methodology
+          if(evaluateTitle === eSearchSong && evaluateArtist === eSearchArtist)
           {
-            found = searchResults[i].result; 
+            found = foundResult; 
+          }
+          else if(evaluateTitle.includes(eSearchSong) && evaluateArtist === eSearchArtist){
+            found = foundResult; 
+          }
+          else if(eSearchSong.includes(evaluateTitle) && evaluateArtist === eSearchArtist){
+            found = foundResult; 
+          }
+          else if(evaluateTitle === eSearchSong && evaluateArtist.includes(eSearchArtist))
+          {
+            found = foundResult; 
+          }
+          else if(evaluateTitle === eSearchSong &&  eSearchArtist.includes(evaluateArtist))
+          {
+            found = foundResult; 
+          }
+          //just for Kendrick
+          else if(evaluateTitle[1] === eSearchSong && evaluateArtist === eSearchArtist)
+          {
+            found = foundResult; 
           }
       }
 
       //Kendrick Lamar Logic bomb: why doesn't "i" === "i"?
-      let logic = (searchResults[0].result.title.toString() === searchSong.toString()) ? true : false;
-
-      let show = {
-        searched: searchSong,
-        first: searchResults[0].result.title,
-        logic: logic,
-        found: found 
-      }
+      // let logic = searchResults[0].result.title[1].toUpperCase() === searchSong.toUpperCase();
+      //Turns out it's the api's fault: Api side title was two characters (somehow?)
+      // let show = {
+      //   searched: searchSong,
+      //   first: searchResults[0].result.title,
+      //   logic: logic,
+      //   found: found 
+      // }
+      // console.log(show);
 
       //If specific artist/song combination cannot be found in genius.com do something
       //Flesh out more to alter emotionReader client side
       if(!found || !found.url)
       {
         let placeholder = [
-          {score: 0.7},
-          {score: 0.7},
-          {score: 0.7},
-          {score: 0.7},
-          {score: 0.7}
+          {score: 0.66},
+          {score: 0.66},
+          {score: 0.66},
+          {score: 0.66},
+          {score: 0.66}
         ]
 
-        console.log(show);
         res.send(placeholder);
       }
       //otherwise commence analysis
@@ -180,47 +198,42 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
           const fill = [];
           let $ = cheerio.load(response.data);
 
-          //Hacky way of being thorough, can't properly eliminate [Chorus] and [Post-Chorus]for some reason
-          //Also to not give Watson a tonne of white space
+          //First .replace(): Wipeout all square brackets and characters between square brackets
+          //Second .replace(): Wipeout any character that is NOT listed within the square brackets
+          //Third .replace(): Reduce any excess white space
         let lyrics = $(".lyrics").text()
-            .replace("[Verse 1]", "")
-            .replace("[Verse 2]", "")
-            .replace("[Verse 3]", "")
-            .replace("[Chorus]", "")
-            .replace("[Bridge]", "")
-            .replace("[Post-Chorus]", "")
-            .replace("[Coda]", "")
-            .replace("[Hook]", "")
-            .replace("[Outro]", "")
+            .replace(/\[.*\]/g, "")
+            .replace(/[^a-z A-Z 0-9 ; : \- & ~`',.]/g, " ")
             .replace(/\s/g, " ");
-
-        console.log("Here are the lyrics for: "+ searchSong, lyrics)
           //Watson Lyric Analysis
           axios.get("https://"+ watson.user +":"+ watson.pass +"@gateway.watsonplatform.net/tone-analyzer/api/v3/tone?version=2016-05-19&text=" + lyrics, {   
             header: "X-Watson-Learning-Opt-Out: true"      
           })
-          .then( (response)=> {
+          .then((response)=> {
             res.send(response.data.document_tone.tone_categories[0].tones);
           })
         .catch((error)=> {
-          console.log(error);
+          console.log("Breakpoint 1:", error);
         });
       })
     .catch((error)=>{
-      console.log(error);
+      console.log("Breakpoint 2:", error);
     })      
       }
 
   })
-  .catch(function(error){ 
+  .catch((error)=>{ 
     let json = CircularJSON.stringify(error);
-    console.log(error);
+    console.log("Breakpoint 3:", error);
     res.send(json);
   })
 })
 
+app.get("*", (req, res)=>{
+  res.sendFile(__dirname+"/build/index.html")
+})
 
 //Listener
-app.listen(8080, ()=> {
-console.log('server running on 8080! Press Ctrl+C to kill ');
+app.listen(PORT, ()=> {
+console.log(`server running on ${PORT}! Press Ctrl+C to kill `);
 })

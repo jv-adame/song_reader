@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 
 class EmotionReader extends Component{
     render(){
+        let energy = Math.ceil(this.props.energy * 100);
+        let tempo = Math.ceil(this.props.tempo);
         let emotionJSX = this.props.emotion.map((thisArray, index)=>{
             let emotion;
             if (index === 0)
@@ -27,8 +29,26 @@ class EmotionReader extends Component{
             )
           });
         return(
-            <div className="flexContainer">
-                {emotionJSX}
+            <div>
+              <div className="flexContainer readContainer">
+                  {emotionJSX}
+                  <div>
+                    <div>
+                      Tempo:
+                    </div>
+                    <div className="Tempo">
+                      {tempo} BPM
+                    </div>
+                  </div>
+                  <div>
+                    <div>
+                      Energy:
+                    </div>
+                    <div className="Energy">
+                      {energy}%
+                    </div>
+                  </div>
+              </div>
             </div>
         )
     }

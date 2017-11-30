@@ -6,14 +6,14 @@ import React, {Component} from 'react';
 class searchList extends Component{
     render(){
         
-        let songData = this.props.searchResults.map((el,i,arr)=>{
+        let songData = this.props.searchResults.map((el,index,array)=>{
             return (
             <div className="musicBox flexContainer">
                 <div className="flexContainer">
                     <div className="flexColumn">        
-                        <iframe src={"https://open.spotify.com/embed?uri=" + this.props.searchResults[i].uri}
+                        <iframe src={"https://open.spotify.com/embed?uri=" + this.props.searchResults[index].uri}
                             frameorder="0" allowtransparency="true" height="80px" width="100%"></iframe>    
-                        <button onClick={()=>this.props.inputTone(this.props.searchResults[i].name, this.props.searchResults[i].artists, this.props.searchResults[i].id)}>submit</button>
+                        <button onClick={()=>this.props.inputTone(this.props.searchResults[index].name, this.props.searchResults[index].artists, this.props.searchResults[index].id)}>submit</button>
                     </div>
                 </div>
             </div>

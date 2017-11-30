@@ -1,3 +1,8 @@
+body{
+  background-color: #424242;
+}
+
+
 .App {
   text-align: center;
   height: 100vh;
@@ -26,8 +31,12 @@
 .flexContainer{
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: space-around;
+  margin: 0 auto;
+}
 
+.readContainer{
+  width: 75%;
 }
 
 .flexColumn{
@@ -48,10 +57,8 @@
   
 }
 .stroke{
-  stroke-dasharray: 65;
   animation: dash infinite 5s linear;
 }
-
 
 /*Animations for all logos*/
 @keyframes App-logo-spin {
@@ -84,12 +91,14 @@
 .Sadness{
   color: #325FC6;
 }
+.Tempo{
+  color: #45EA22;
+}
+.Energy{
+  color: #F6ED60;
+}
 
 /*Search Results*/
-
-.albumCover{
-  width: 100px;
-}
 
 .transparent{
   position: absolute;
@@ -103,4 +112,25 @@
   background-position: 58% 50%;
   border-radius: 500px;
   cursor: pointer;
+}
+
+
+.searchBar{
+  border: 2px solid black;
+  border-left-style: none;
+  border-right-style: none;
+  background-color: #424242;
+  color: white;
+}
+
+.searchButton{
+  border: 2px solid black;
+  border-left-style: none;
+  background-color: #424242;
+  color: white;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+.searchForm{
+  padding-bottom: 1vh;
 }
