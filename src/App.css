@@ -125,15 +125,12 @@ body{
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
   height: 11vh;
-  width: 30vw;
+  width: 20vw;
   position: absolute;
   top: -6vh;
   left: 0vw;
 }
-searchBar:input{
-  font: 400 24px Arial;
-  text-indent: 5vw;
-}
+
 input{
   font: 400 24px Arial;
   text-indent: 5vw;  
