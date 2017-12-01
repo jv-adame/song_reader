@@ -22,6 +22,7 @@ body{
   justify-content: space-between;
   background-color: #0F0F0F;
   color: white;
+  height: 15vh;
 }
 .readContainer{
   width: 45%;
@@ -64,10 +65,7 @@ body{
 .imgClick{
   cursor: pointer;
 }
-.searchContainer{
-  /* background-color: #424242; */
-  margin: auto 0;
-}
+
 /*CSS Animation*/
 .spin{
   animation: App-logo-spin infinite 20s linear;
@@ -114,7 +112,11 @@ body{
 }
 
 /*Search Results*/
-
+.searchContainer{
+  /* background-color: #424242; */
+  margin: auto 0;
+  position: relative;
+}
 .searchBar{
   border: 2px solid black;
   border-left-style: none;
@@ -122,13 +124,30 @@ body{
   color: white;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
+  height: 11vh;
+  width: 30vw;
+  position: absolute;
+  top: -6vh;
+  left: 0vw;
 }
 
 .searchForm{
   padding-bottom: 1vh;
   text-align: left;
+  
 }
-
+.searchForm h6{
+  position: absolute;
+  top: -9vh;
+  left: 6vw;
+  z-index: 10;
+}
+.searchImg{
+  position: absolute;
+  z-index: 10;
+  top: -3vh;
+  left: 0vw;
+}
 .nowPlaying{
   color: white;
   margin: auto 0;

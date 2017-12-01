@@ -10,12 +10,12 @@ class SearchBar extends React.Component{
         render(){
             return(
                 <div className="flexContainer searchContainer iconTray">
-                    <div>
-                    <img className="imgClick iconImg" src={searchIcon} alt="search" onClick={()=> this.props.search(this.refs.searchInput.value)}/>
+                    <div className="searchBackground">
+                    <img className="imgClick iconImg searchImg" src={searchIcon} alt="search" onClick={()=> this.props.search(this.refs.searchInput.value)}/>
                     </div>
 
                     <form className="searchForm" onSubmit={this.noRefreshEVER}>
-                        <p>Search for an Artist or Song</p>
+                        <h6>Search for an Artist or Song</h6>
                         <button style={{display:"none"}} onClick={()=> this.props.search(this.refs.searchInput.value)}>Search</button> 
                         <input className="searchBar" ref="searchInput" type="text" placeholder=" Start Typing"/>
                     </form>
