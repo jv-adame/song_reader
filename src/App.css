@@ -2,7 +2,6 @@ body{
   background-color: #424242;
 }
 
-
 .App {
   text-align: center;
   height: 100vh;
@@ -14,35 +13,20 @@ body{
   margin: 0 auto;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
-
-.App-title {
-  font-size: 1.5em;
-}
-
-.App-intro {
-  font-size: large;
-}
-
 .flexContainer{
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  margin: 0 auto;
 }
 
+.header{
+  justify-content: space-between;
+  background-color: #0F0F0F;
+  color: white;
+}
 .readContainer{
   width: 75%;
+  margin: 0 auto;
 }
 
 .flexColumn{
@@ -54,11 +38,30 @@ body{
   text-align: left;
 }
 
+.iconContainer{
+  width: 50px;
+}
+
+.iconContainer img{
+  max-width: 100%;
+}
+.iconTray{
+  width: 25vw;
+  
+}
+.iconTray div{
+  margin: auto 0;
+}
+.iconImg{
+  width: 50px;
+}
+
+.imgClick{
+  cursor: pointer;
+}
 /*CSS Animation*/
 .spin{
   animation: App-logo-spin infinite 20s linear;
-  margin: 0 auto;
-  
 }
 .stroke{
   animation: dash infinite 5s linear;
@@ -68,7 +71,6 @@ body{
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
-
 }
 
 /*Spiral Animations*/
@@ -104,30 +106,7 @@ body{
 
 /*Search Results*/
 
-/* .transparent{
-  position: absolute;
-  width: 64px;
-  height: 64px;
-  left: 7px;
-  top: 7px;
-  background-color: transparent;
-  background-repeat: no-repeat;
-  background-size: 24px;
-  background-position: 58% 50%;
-  border-radius: 500px;
-  cursor: pointer;
-} */
-
-
 .searchBar{
-  border: 2px solid black;
-  border-left-style: none;
-  border-right-style: none;
-  background-color: #424242;
-  color: white;
-}
-
-.searchButton{
   border: 2px solid black;
   border-left-style: none;
   background-color: #424242;
@@ -135,8 +114,8 @@ body{
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
 }
-.searchForm{
 
+.searchForm{
   padding-bottom: 1vh;
   text-align: left;
 }

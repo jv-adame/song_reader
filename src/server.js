@@ -215,8 +215,6 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
             .replace(/[^a-z A-Z 0-9 ; : \- & ~`',.]/g, " ")
             .replace(/\s/g, " ");
 
-
-
           //test for false positives
          //console.log(lyrics);
           

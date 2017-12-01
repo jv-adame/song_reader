@@ -7,6 +7,10 @@ import EmotionReader from "./components/emotionReader";
 import SearchList from "./components/searchList";
 import SearchBar from "./components/searchBar";
 import NowPlaying from "./components/nowPlaying";
+import searchIcon from "./images/search_icon.png"
+import spotify from "./images/spotify.png";
+import watson from "./images/watson.png";
+import genius from "./images/genius.png";
 import config from "./config";
 import circularJSON from "circular-json";
 import { lchmod } from 'fs';
@@ -213,7 +217,15 @@ class App extends Component {
       let playingArtist = this.state.artist;
     return (
       <div className="App">
+          <div className="header flexContainer">
          <SearchBar search={this.search} />
+          <div className="flexContainer iconTray">
+            <div>Powered By:</div>
+            <div className="iconContainer"><a href="https://developer.spotify.com/web-api/" target="_blank"><img className="iconImg" src={spotify} alt="Spotify"/></a></div>
+            <div className="iconContainer"><a href="https://www.ibm.com/watson/services/tone-analyzer/" target="_blank"><img className="iconImg" src={watson} alt="Watson"/></a></div>
+            <div className="iconContainer"><a href="https://genius.com/developers" target="_blank"><img className="iconImg" src={genius} alt="Genius"/></a></div>
+          </div>
+         </div>
          <div className="wrapper">
             <Animation color={this.state.color} percentage={this.state.percentage} tempo={this.state.tempo} energy={this.state.energy}/>
             <NowPlaying song={this.state.song} artist={this.state.artist}/>

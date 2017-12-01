@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-
+import searchIcon from "../images/search_icon.png"
 
 class SearchBar extends React.Component{
         
@@ -10,11 +10,14 @@ class SearchBar extends React.Component{
         render(){
             return(
                 <div>
+                    <div>
+                    <img className="imgClick iconImg" src={searchIcon} alt="search" onClick={()=> this.props.search(this.refs.searchInput.value)}/>
+                    </div>
+
                     <form className="searchForm" onSubmit={this.noRefreshEVER}>
                         <p>Search for an Artist or Song</p>
-                        <input className="searchBar" ref="searchInput" type="text" placeholder="Start Typing"/>
-                        <button className="searchButton" onClick={()=> this.props.search(this.refs.searchInput.value)}>Search</button> 
-                        <img src="../images/search_icon.png"/>
+                        <button style={{display:"none"}} onClick={()=> this.props.search(this.refs.searchInput.value)}>Search</button> 
+                        <input className="searchBar" ref="searchInput" type="text" placeholder=" Start Typing"/>
                     </form>
                 </div>
             )

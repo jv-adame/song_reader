@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-
+import genius from "../images/genius.png";
 //Spotify API implementation
 //https://developer.spotify.com/technologies/widgets/spotify-play-button/
 //Song playing will have onClick={()=>this.props.setTone(arr[i].index)}
@@ -32,12 +32,12 @@ class searchList extends Component{
         let songData = this.props.searchResults.map((el,index,array)=>{
             return (
             <div className="musicBox flexContainer">
-                <div className="flexContainer">
-                    <div className="flexColumn">        
+                <div className="flexContainer">                          
                         <iframe ref={"music" + index} src={"https://open.spotify.com/embed?uri=" + this.props.searchResults[index].uri}
-                            frameorder="0" allowtransparency="true" height="80px" width="100%"></iframe>    
-                        <button onClick={()=>this.props.inputTone(this.props.searchResults[index].name, this.props.searchResults[index].artists, this.props.searchResults[index].id)}>Analyze Song</button>
-                    </div>
+                            frameorder="0" allowtransparency="true" height="80px" width="100%"></iframe> 
+                        <div>   
+                            <img className="imgClick iconImg" src={genius} alt="genius" onClick={()=>this.props.inputTone(this.props.searchResults[index].name, this.props.searchResults[index].artists, this.props.searchResults[index].id)}/>
+                        </div>
                 </div>
             </div>
         )});
