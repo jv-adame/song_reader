@@ -12,15 +12,11 @@ class searchList extends Component{
     }
     
     componentDidMount(){
-        console.log(document.getElementById("play-button"));
+       // console.log(document.getElementById("play-button"));
         if(document.getElementById("play-button"))
         {
             document.getElementById("play-button").addEventListener("click", this.clickHandler);
         }        
-            
-
-            
-
     }
 
     
@@ -41,7 +37,7 @@ class searchList extends Component{
                     <div className="flexColumn">        
                         <iframe ref={"music" + index} src={"https://open.spotify.com/embed?uri=" + this.props.searchResults[index].uri}
                             frameorder="0" allowtransparency="true" height="80px" width="100%"></iframe>    
-                        <button onClick={()=>this.props.inputTone(this.props.searchResults[index].name, this.props.searchResults[index].artists, this.props.searchResults[index].id)}>Analyze</button>
+                        <button onClick={()=>this.props.inputTone(this.props.searchResults[index].name, this.props.searchResults[index].artists, this.props.searchResults[index].id)}>Analyze Song</button>
                     </div>
                 </div>
             </div>

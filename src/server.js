@@ -122,7 +122,6 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
                     .replace(/\(So.*\)/g, "");
   let searchArtist = req.params.artist;
   //axios authorization call
-  console.log("Refined title:", searchSong);
     axios({
       url: "http://api.genius.com/search?q=" + searchSong + " " + searchArtist,
       method: "get",
