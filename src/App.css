@@ -130,6 +130,14 @@ body{
   top: -6vh;
   left: 0vw;
 }
+searchBar:input{
+  font: 400 24px Arial;
+  text-indent: 5vw;
+}
+input{
+  font: 400 24px Arial;
+  text-indent: 5vw;  
+}
 
 .searchForm{
   padding-bottom: 1vh;
@@ -138,8 +146,8 @@ body{
 }
 .searchForm h6{
   position: absolute;
-  top: -9vh;
-  left: 6vw;
+  top: -8vh;
+  left: 5vw;
   z-index: 10;
 }
 .searchImg{
