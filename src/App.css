@@ -6,6 +6,12 @@ body{
 .App {
   text-align: center;
   height: 100vh;
+
+}
+
+.wrapper{
+  width: 1280px;
+  margin: 0 auto;
 }
 
 .App-logo {
@@ -47,9 +53,7 @@ body{
   display: inline-block;
   text-align: left;
 }
-.musicBox{
-  width: 50%;
-}
+
 /*CSS Animation*/
 .spin{
   animation: App-logo-spin infinite 20s linear;
@@ -100,7 +104,7 @@ body{
 
 /*Search Results*/
 
-.transparent{
+/* .transparent{
   position: absolute;
   width: 64px;
   height: 64px;
@@ -112,7 +116,7 @@ body{
   background-position: 58% 50%;
   border-radius: 500px;
   cursor: pointer;
-}
+} */
 
 
 .searchBar{
@@ -132,5 +136,7 @@ body{
   border-bottom-right-radius: 5px;
 }
 .searchForm{
+
   padding-bottom: 1vh;
+  text-align: left;
 }

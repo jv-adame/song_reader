@@ -213,11 +213,13 @@ class App extends Component {
       let playingArtist = this.state.artist;
     return (
       <div className="App">
-         <Animation color={this.state.color} percentage={this.state.percentage} tempo={this.state.tempo} energy={this.state.energy}/>
-         <NowPlaying song={this.state.song} artist={this.state.artist}/>
-         <EmotionReader emotion={this.state.emotion} moving={this.state.moving} tempo={this.state.tempo} energy={this.state.energy} song={this.state.song}/>
          <SearchBar search={this.search} />
-         <SearchList setTone={this.setTone} onPause={this.onPause} searchResults={this.state.searchResults} inputTone={this.inputTone}/>
+         <div className="wrapper">
+            <Animation color={this.state.color} percentage={this.state.percentage} tempo={this.state.tempo} energy={this.state.energy}/>
+            <NowPlaying song={this.state.song} artist={this.state.artist}/>
+            <EmotionReader emotion={this.state.emotion} moving={this.state.moving} tempo={this.state.tempo} energy={this.state.energy} song={this.state.song}/>       
+            <SearchList setTone={this.setTone} onPause={this.onPause} searchResults={this.state.searchResults} inputTone={this.inputTone}/>
+         </div>      
       </div>
     );
   }

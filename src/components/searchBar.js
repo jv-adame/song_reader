@@ -11,7 +11,8 @@ class SearchBar extends React.Component{
             return(
                 <div>
                     <form className="searchForm" onSubmit={this.noRefreshEVER}>
-                        <input className="searchBar" ref="searchInput" type="text" />
+                        <p>Search for an Artist or Song</p>
+                        <input className="searchBar" ref="searchInput" type="text" placeholder="Start Typing"/>
                         <button className="searchButton" onClick={()=> this.props.search(this.refs.searchInput.value)}>Search</button> 
                         <img src="../images/search_icon.png"/>
                     </form>

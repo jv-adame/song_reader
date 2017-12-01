@@ -115,7 +115,7 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
   //Panic at the Disco and Fall Out Boy should be safe
   //First .replace(): removes all artists credited as (with <artist name>) from song title
   //Second .replace(): removes all artists credited as (feat. <artist name>) from song title
-  //Third .replace(): removes parts of Spotify song titles like "- Remastered"
+  //Third .replace(): removes parts of common Spotify song titles like " - Remastered"
   //Fourth .replace():  Edge case for Helena (So Long & Good Night), categoried simply as Helena at Genius.com
   let searchSong = req.params.song
                     .replace(/\(with.*\)/g, "")
@@ -218,7 +218,7 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
 
 
           //test for false positives
-          //console.log(lyrics)
+         //console.log(lyrics);
           
           //Watson Lyric Analysis
           axios.get("https://"+ watson.user +":"+ watson.pass +"@gateway.watsonplatform.net/tone-analyzer/api/v3/tone?version=2016-05-19&text=" + lyrics, {   
