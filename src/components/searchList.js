@@ -31,8 +31,8 @@ class searchList extends Component{
 
         let songData = this.props.searchResults.map((el,index,array)=>{
             return (
-            <div className="musicBox flexContainer">
-                <div className="flexContainer">                          
+            <div className=" flexContainer">
+                <div className="flexContainer musicBox">                          
                         <iframe ref={"music" + index} src={"https://open.spotify.com/embed?uri=" + this.props.searchResults[index].uri}
                             frameorder="0" allowtransparency="true" height="80px" width="100%"></iframe> 
                         <div>   

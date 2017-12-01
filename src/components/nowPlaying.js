@@ -7,8 +7,8 @@ class NowPlaying extends Component{
         let playingSong = this.props.song;
         let playingArtist = this.props.artist;
         return(
-            <div>
-                {(playingSong) ? "Now Analyzing:" : ""} {playingSong} {(playingSong) ? "-" : ""} {playingArtist}
+            <div className="nowPlaying">
+               <h2> {(playingSong) ? "Now Analyzing:" : ""} {playingSong} {(playingSong) ? "-" : ""} {playingArtist}</h2>
             </div>
         )
     }

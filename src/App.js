@@ -219,6 +219,7 @@ class App extends Component {
       <div className="App">
           <div className="header flexContainer">
          <SearchBar search={this.search} />
+         <NowPlaying song={this.state.song} artist={this.state.artist}/>
           <div className="flexContainer iconTray">
             <div>Powered By:</div>
             <div className="iconContainer"><a href="https://developer.spotify.com/web-api/" target="_blank"><img className="iconImg" src={spotify} alt="Spotify"/></a></div>
@@ -228,7 +229,7 @@ class App extends Component {
          </div>
          <div className="wrapper">
             <Animation color={this.state.color} percentage={this.state.percentage} tempo={this.state.tempo} energy={this.state.energy}/>
-            <NowPlaying song={this.state.song} artist={this.state.artist}/>
+            
             <EmotionReader emotion={this.state.emotion} moving={this.state.moving} tempo={this.state.tempo} energy={this.state.energy} song={this.state.song}/>       
             <SearchList setTone={this.setTone} onPause={this.onPause} searchResults={this.state.searchResults} inputTone={this.inputTone}/>
          </div>      
