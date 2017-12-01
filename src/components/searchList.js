@@ -22,7 +22,6 @@ class searchList extends Component{
     
     componentWillUnmount(){
         document.getElementById("play-button").removeEventListener("click", this.clickHandler);
-        
     }
     clickHandler(event){
         alert("hello");

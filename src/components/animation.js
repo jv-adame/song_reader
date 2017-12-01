@@ -48,7 +48,7 @@ class Animation extends Component{
 
         }
         //Dash array determination
-        let assign = 200 - Math.ceil(this.props.tempo);
+        let assign = 150 - ((Math.ceil(this.props.tempo)/2));
 
         //Glow filter assignment
         let glow = (this.props.energy *10);
