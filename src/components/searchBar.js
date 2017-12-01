@@ -9,7 +9,7 @@ class SearchBar extends React.Component{
     
         render(){
             return(
-                <div className="flexContainer searchContainer">
+                <div className="flexContainer searchContainer iconTray">
                     <div>
                     <img className="imgClick iconImg" src={searchIcon} alt="search" onClick={()=> this.props.search(this.refs.searchInput.value)}/>
                     </div>
