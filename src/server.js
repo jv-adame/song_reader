@@ -112,9 +112,17 @@ app.get("/tempo/:id", (req, res)=>{
 
 //Genius API call
 app.get("/lyrics/:song/:artist", (req,res)=>{
-  let searchSong = req.params.song;
+  //Panic at the Disco and Fall Out Boy should be safe
+  //First .replace(): removes all artists credited as (with <artist name>) from song title
+  //Second .replace(): removes all artists credited as (feat. <artist name>) from song title
+  //Third .replace():  Edge case for Helena (So Long & Good Night), categoried simply as Helena at Genius.com
+  let searchSong = req.params.song
+                    .replace(/\(with.*\)/g, "")
+                    .replace(/\(feat.*\)/g, "")
+                    .replace(/\(So.*\)/g, "");
   let searchArtist = req.params.artist;
   //axios authorization call
+  console.log("Refined title:", searchSong);
     axios({
       url: "http://api.genius.com/search?q=" + searchSong + " " + searchArtist,
       method: "get",

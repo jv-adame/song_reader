@@ -11,30 +11,23 @@ class searchList extends Component{
         this.clickHandler = this.clickHandler.bind(this);
     }
     
-    // componentDidMount(){
-            
-
-            
-    //       //  document.getElementById("play-button").addEventListener("click", this.clickHandler);  
-            
-
-    // }
-    componentDidUpdate(){
-
+    componentDidMount(){
+        console.log(document.getElementById("play-button"));
         if(document.getElementById("play-button"))
         {
-            alert("good morrow");
-        }
-        else{
-            alert("good day");
-        }
-        // console.log(document.getElementById("play-button").innerHTML);
+            document.getElementById("play-button").addEventListener("click", this.clickHandler);
+        }        
+            
+
+            
 
     }
 
-    // componentWillUnmount(){
-    //     document.getElementById("fun").removeEventListener("click", this.clickHandler);
-    // }
+    
+    componentWillUnmount(){
+        document.getElementById("play-button").removeEventListener("click", this.clickHandler);
+        
+    }
     clickHandler(event){
         alert("hello");
     }
@@ -46,9 +39,9 @@ class searchList extends Component{
             <div className="musicBox flexContainer">
                 <div className="flexContainer">
                     <div className="flexColumn">        
-                        <iframe src={"https://open.spotify.com/embed?uri=" + this.props.searchResults[index].uri}
+                        <iframe ref={"music" + index} src={"https://open.spotify.com/embed?uri=" + this.props.searchResults[index].uri}
                             frameorder="0" allowtransparency="true" height="80px" width="100%"></iframe>    
-                        <button onClick={()=>this.props.inputTone(this.props.searchResults[index].name, this.props.searchResults[index].artists, this.props.searchResults[index].id)}>submit</button>
+                        <button onClick={()=>this.props.inputTone(this.props.searchResults[index].name, this.props.searchResults[index].artists, this.props.searchResults[index].id)}>Analyze</button>
                     </div>
                 </div>
             </div>

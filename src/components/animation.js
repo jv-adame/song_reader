@@ -12,61 +12,62 @@ class Animation extends Component{
         //for each "white" count there is one less color
         for (let i = 0; i < copy.length; i++)
         {
-          if (copy[i] !== "white")
-          {
+
             sum += p[i];
-          }
+
             
         }
          //assign percentage to present colors
         let initial = 0;
-
+        let k;
         for (let j = 0; j < copy.length; j++)
         {
-          if(copy[j] !== "white")
+          //Print the colours in rygbv order
+          if(j===0)
           {
-            initial += p[j];
+            k = 0;
+          }
+          if(j===1)
+          {
+            k = 3;
+          }
+          if(j===2)
+          {
+            k = 1;
+          }
+          if(j===3)
+          {
+            k = 4;
+          }
+          if(j===4)
+          {
+            k = 2;
+          }
+
+            initial += p[k];
             let percent = (initial/sum) * 100;
             let string = percent + "%";
-            off[j] = string;
-          }
+            off[k] = string;
+
         }
         //Dash array determination
-        let assign;
-        let dash = 200 - Math.ceil(this.props.tempo);
-        if (dash < 20){
-          assign = 20;
-        }
-        else if (dash > 150)
-        {
-          assign = 200;
-        }
-        else
-        {
-          assign = dash;
-        }
+        let assign = 200 - Math.ceil(this.props.tempo);
+
         //Glow filter assignment
         let glow = (this.props.energy *10);
         return(
             <div id="fun">
-          <svg className="spin" x="0px" y="0px" width="400" height="400" fill="none" stroke="url(#grad1)">
+          <svg className="spin" width="400" height="400" fill="none" stroke="url(#grad1)">
           <defs>
-          <radialGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+          {/* <radialGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%" r="10%"> */}
+          <radialGradient id="grad1" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
               <stop offset={off[0]}style={{"stopColor": copy[0], "stopOpacity": 1}} />
               <stop offset={off[3]} style={{"stopColor": copy[3],"stopOpacity":1}} />
               <stop offset={off[1]} style={{"stopColor": copy[1],"stopOpacity":1}} />
               <stop offset={off[4]} style={{"stopColor": copy[4], "stopOpacity": 1}} />
               <stop offset={off[2]} style={{"stopColor": copy[2], "stopOpacity": 1}} />
          </radialGradient>
-          {/* Test for perfect ratios, finishing touch */}
-         <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset={off[0]}style={{"stopColor": copy[0], "stopOpacity": 1}} />
-              <stop offset={off[3]} style={{"stopColor": copy[3],"stopOpacity":1}} />
-              <stop offset={off[1]} style={{"stopColor": copy[1],"stopOpacity":1}} />
-              <stop offset={off[4]} style={{"stopColor": copy[4], "stopOpacity": 1}} />
-              <stop offset={off[2]} style={{"stopColor": copy[2], "stopOpacity": 1}} />
-         </linearGradient>
-         
+      
           </defs>
         <filter id="blur-filter" x="-2" y="-2" width="200" height="200">
           <feGaussianBlur in="SourceGraphic" stdDeviation={glow} />
