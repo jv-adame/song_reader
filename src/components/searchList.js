@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 //Spotify API implementation
 //https://developer.spotify.com/technologies/widgets/spotify-play-button/
 //Song playing will have onClick={()=>this.props.setTone(arr[i].index)}
+//id play-button
 class searchList extends Component{
     constructor(){
         super();
@@ -11,23 +12,35 @@ class searchList extends Component{
     }
     
     // componentDidMount(){
-    //     if (document.getElementById("play-button"))
-    //     {
-    //         document.getElementById("play-button").addEventListener("click", this.clickHandler);   
-    //     }
+            
+
+            
+    //       //  document.getElementById("play-button").addEventListener("click", this.clickHandler);  
+            
 
     // }
+    componentDidUpdate(){
+
+        if(document.getElementById("play-button"))
+        {
+            alert("good morrow");
+        }
+        else{
+            alert("good day");
+        }
+        // console.log(document.getElementById("play-button").innerHTML);
+
+    }
 
     // componentWillUnmount(){
-    //     document.getElementById("play-button").removeEventListener("click", this.clickHandler);
+    //     document.getElementById("fun").removeEventListener("click", this.clickHandler);
     // }
-
     clickHandler(event){
-        alert("hello!");
+        alert("hello");
     }
-    
+
     render(){
-        
+
         let songData = this.props.searchResults.map((el,index,array)=>{
             return (
             <div className="musicBox flexContainer">

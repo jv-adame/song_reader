@@ -48,7 +48,7 @@ class Animation extends Component{
         //Glow filter assignment
         let glow = (this.props.energy *10);
         return(
-            <div>
+            <div id="fun">
           <svg className="spin" x="0px" y="0px" width="400" height="400" fill="none" stroke="url(#grad1)">
           <defs>
           <radialGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
