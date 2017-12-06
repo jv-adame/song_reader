@@ -126,14 +126,14 @@ class App extends Component {
      
     let copy = Array.from(this.state.color);
     //anger index 0
-    if (colorList[0] < 30){
+    if (colorList[0] < 20){
       copy[0] = "#F8A095";
     }
-    else if (colorList[0] >= 30 && colorList[0] < 45)
+    else if (colorList[0] >= 20 && colorList[0] < 40)
     {
       copy[0] = "red";
     }
-    else if (colorList[0] >= 45 && colorList[0] < 60)
+    else if (colorList[0] >= 40 && colorList[0] < 60)
     {
       copy[0] = "#DE0017";
     }
@@ -142,30 +142,30 @@ class App extends Component {
       copy[0] = "crimson";
     }
     //disgust index 1
-    if (colorList[1] < 30){
+    if (colorList[1] < 20){
      copy[1] = "#82B252";
     }
-    else if (colorList[0] >= 30 && colorList[1] < 45)
+    else if (colorList[0] >= 20 && colorList[1] < 40)
     {
-      copy[1] = "green";
+      copy[1] = "#32CD32";
     }
-    else if (colorList[0] >= 45 && colorList[1] < 60)
+    else if (colorList[0] >= 40 && colorList[1] < 60)
     {
-      copy[1] = "#375E29";
+      copy[1] = "#006400";
     }
     else if (colorList[1] >= 60)
     {
-      copy[1] = "deepgreen";
+      copy[1] = "#0f3a00";
     }
     //fear index 2
-    if (colorList[2] < 30){
+    if (colorList[2] < 20){
       copy[2] = "#A479DB";
     }
-    else if (colorList[2] >= 30 && colorList[2] < 45)
+    else if (colorList[2] >= 20 && colorList[2] < 40)
     {
       copy[2] = "purple";
     }
-    else if (colorList[2] >= 45 && colorList[2] < 60)
+    else if (colorList[2] >= 40 && colorList[2] < 60)
     {
       copy[2] = "#562786";
     }
@@ -174,14 +174,14 @@ class App extends Component {
       copy[2] = "#3e1c60";
     }
     //joy index 3
-    if (colorList[3] < 30){
+    if (colorList[3] < 20){
      copy[3] = "#FDF169";
     }
-    else if (colorList[3] >= 30 && colorList[3] < 45)
+    else if (colorList[3] >= 20 && colorList[3] < 40)
     {
       copy[3] = "yellow";
     }
-    else if (colorList[3] >= 45 && colorList[3] < 60)
+    else if (colorList[3] >= 40 && colorList[3] < 60)
     {
       copy[3] = "#FBD500";
     }
@@ -190,20 +190,20 @@ class App extends Component {
       copy[3] = "#ffd800";
     }
     //sadness index 4
-    if (colorList[4] < 30){
+    if (colorList[4] < 20){
      copy[4] = "#76C4E4";
     }
-    else if (colorList[3] >= 30 && colorList[4] < 45)
+    else if (colorList[3] >= 20 && colorList[4] < 40)
     {
       copy[4] = "blue";
     }
-    else if (colorList[3] >= 45 && colorList[4] < 60)
+    else if (colorList[3] >= 40 && colorList[4] < 60)
     {
-      copy[4] = "#276DB4";
+      copy[4] = "#0047ab";
     }
     else if (colorList[3] >= 60)
     {
-      copy[4] = "#1f5a96";
+      copy[4] = "#191970";
     }
 
     this.setState({

@@ -20,7 +20,7 @@ class EmotionReader extends Component{
 
             return(
               <div>
-                <div>
+                <div className={emotion}>
                   {emotion}:
                 </div>
                 <div className={emotion}>
@@ -34,7 +34,7 @@ class EmotionReader extends Component{
               <div className="flexContainer readContainer">
                   {emotionJSX}
                   <div style={{display:playing}}>
-                    <div>
+                    <div className="Tempo">
                       Tempo:
                     </div>
                     <div className="Tempo" >
@@ -42,7 +42,7 @@ class EmotionReader extends Component{
                     </div>
                   </div>
                   <div style={{display:playing}}>
-                    <div>
+                    <div className="Energy">
                       Energy:
                     </div>
                     <div className="Energy">

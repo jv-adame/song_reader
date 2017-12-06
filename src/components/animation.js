@@ -19,7 +19,7 @@ class Animation extends Component{
         let k;
         for (let j = 0; j < copy.length; j++)
         {
-          //Print and calculate the colours in rygbv order
+          //Print and calculate the colours in chromatic order
           if(j===0)
           {
             k = 0;
@@ -56,7 +56,6 @@ class Animation extends Component{
             <div id="fun">
               <svg className="spin" width="400" height="400" fill="none" stroke="url(#grad1)">
                 <defs>
-                  {/* <radialGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%" r="10%"> */}
                   <radialGradient id="grad1" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
                       <stop offset={off[0]}style={{"stopColor": copy[0], "stopOpacity": 1}} />
                       <stop offset={off[3]} style={{"stopColor": copy[3],"stopOpacity":1}} />

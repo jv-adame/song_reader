@@ -116,7 +116,7 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
   //First .replace(): removes all artists credited as (with <artist name>) from song title
   //Second .replace(): removes all artists credited as (feat. <artist name>) from song title
   //Third .replace(): removes parts of common Spotify song titles like " - Remastered"
-  //Fourth .replace(): removes any text in square brackets
+  //Fourth .replace(): removes any text in square brackets in song title (WHY?!?!?!)
   //Fifth .replace(): Trims any excess (more than one) space
   //Sixth .replace():  Edge case for Helena (So Long & Good Night), categoried simply as Helena at Genius.com
   let searchSong = req.params.song
@@ -129,7 +129,7 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
   let searchArtist = req.params.artist;
   console.log(searchSong);
   console.log(searchArtist);
-  //axios authorization call
+  //axios authorization 
     axios({
       url: "http://api.genius.com/search?q=" + searchSong + " " + searchArtist,
       method: "get",
