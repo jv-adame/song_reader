@@ -5,6 +5,7 @@ const config = require("./config"),
     watson = config.watson_api_key;
     spotify = config.spotify_api_key;
     genius = config.genius_api_key;
+const exceptions = require("./exceptions/exceptions");
 const express = require('express'),
     app = express(),
     PORT = process.env.PORT || 8080;
@@ -118,17 +119,19 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
   //Third .replace(): removes parts of common Spotify song titles like " - Remastered"
   //Fourth .replace(): removes any text in square brackets in song title (WHY?!?!?!)
   //Fifth .replace(): Trims any excess (more than one) space
-  //Sixth .replace():  Edge case for Helena (So Long & Good Night), categoried simply as Helena at Genius.com
   let searchSong = req.params.song
                     .replace(/\(with.*\)/g, "")
                     .replace(/\(feat.*\)/g, "")
                     .replace(/ - .*/g, "")
                     .replace(/\[.*\]/g, "")
-                    .replace(/ * {2,} /g, "")
-                    .replace(/\(So.*\)/g, "");
+                    .replace(/ * {2,} /g, "");
+            
+      //Exception Handler
+      searchSong = exceptions(searchSong);         
+
   let searchArtist = req.params.artist;
-  console.log(searchSong);
-  console.log(searchArtist);
+  console.log("Song:", searchSong);
+  console.log("Artist:", searchArtist);
   //axios authorization 
     axios({
       url: "http://api.genius.com/search?q=" + searchSong + " " + searchArtist,
