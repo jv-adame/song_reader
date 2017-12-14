@@ -52,8 +52,6 @@ app.get("/search/:query", (req, res)=>{
     })
     .then((response)=>{
       let json = CircularJSON.stringify(response.data.tracks);
-    //  console.log(response.data.tracks.items[0].name.replace(/ \(Parody.*\)/g, ""));
-    //  console.log(response.data.tracks.items[0].name.replace(/ \(Parody.*\)/g, "").length);
       res.send(json);
     })
     .catch((error)=>{ 
@@ -115,7 +113,8 @@ app.get("/tempo/:id", (req, res)=>{
 
 //Genius API call
 app.get("/lyrics/:song/:artist", (req,res)=>{
-  //Panic at the Disco and Fall Out Boy should be safe.  The regular expressions below changes Spotify given titles to be in line with Genius.com's title conventions
+  //Panic at the Disco and Fall Out Boy should be safe.  
+  //The regular expressions below changes Spotify given titles to be in line with Genius.com's song title conventions
   
   //First .replace(): removes all artists credited as (with <artist name>) from song title
   //Second .replace(): removes all artists credited as (feat. <artist name>) from song title
@@ -135,7 +134,7 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
       searchSong = exceptions(searchSong);         
   //Only remove ampersand sign for the sake of search query, this character messes with Spotify search results
   let andCut = searchSong.replace("&", "");
-  console.log("Search query", andCut);
+ 
   let searchArtist = req.params.artist;
   // console.log("Song:", searchSong);
   // console.log(searchSong.length);
