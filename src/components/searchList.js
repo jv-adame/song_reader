@@ -29,6 +29,7 @@ class searchList extends Component{
     render(){
 
         let songData = this.props.searchResults.map((el,index,array)=>{
+
             return (
             <div className=" flexContainer">
                 <div className="flexContainer musicBox">                          

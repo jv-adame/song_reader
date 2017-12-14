@@ -52,6 +52,8 @@ app.get("/search/:query", (req, res)=>{
     })
     .then((response)=>{
       let json = CircularJSON.stringify(response.data.tracks);
+    //  console.log(response.data.tracks.items[0].name.replace(/ \(Parody.*\)/g, ""));
+    //  console.log(response.data.tracks.items[0].name.replace(/ \(Parody.*\)/g, "").length);
       res.send(json);
     })
     .catch((error)=>{ 
@@ -113,28 +115,35 @@ app.get("/tempo/:id", (req, res)=>{
 
 //Genius API call
 app.get("/lyrics/:song/:artist", (req,res)=>{
-  //Panic at the Disco and Fall Out Boy should be safe
+  //Panic at the Disco and Fall Out Boy should be safe.  The regular expressions below changes Spotify given titles to be in line with Genius.com's title conventions
+  
   //First .replace(): removes all artists credited as (with <artist name>) from song title
   //Second .replace(): removes all artists credited as (feat. <artist name>) from song title
   //Third .replace(): removes parts of common Spotify song titles like " - Remastered"
   //Fourth .replace(): removes any text in square brackets in song title (WHY?!?!?!)
-  //Fifth .replace(): Trims any excess (more than one) space
-  let searchSong = req.params.song
+  //Fifth .replace(): removes all titles with (Parody of <song name>) in title.  Weird Al clause
+  //Sixth .replace(): Trims any excess (more than one) space
+  let searchSong = req.params.song             
                     .replace(/\(with.*\)/g, "")
                     .replace(/\(feat.*\)/g, "")
                     .replace(/ - .*/g, "")
                     .replace(/\[.*\]/g, "")
+                    .replace(/ \(Parody.*\)/g, "")
                     .replace(/ * {2,} /g, "");
             
       //Exception Handler
       searchSong = exceptions(searchSong);         
-
+  //Only remove ampersand sign for the sake of search query, this character messes with Spotify search results
+  let andCut = searchSong.replace("&", "");
+  console.log("Search query", andCut);
   let searchArtist = req.params.artist;
-  console.log("Song:", searchSong);
-  console.log("Artist:", searchArtist);
+  // console.log("Song:", searchSong);
+  // console.log(searchSong.length);
+  // console.log("Artist:", searchArtist);
+  // console.log(searchArtist.length);
   //axios authorization 
     axios({
-      url: "http://api.genius.com/search?q=" + searchSong + " " + searchArtist,
+      url: "http://api.genius.com/search?q=" + andCut + " " + searchArtist,
       method: "get",
       params: {
         "Accept": "application/json",
@@ -150,12 +159,19 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
       for(i = 0; i < searchResults.length; i++)
       {
         //query is substring of title
-        let evaluateTitle = searchResults[i].result.title.toLowerCase();  
+        //Spotify and Genius use different characters for apostraphes.  This remove any non standard characters for the sake of evaluation including all apostraphes
+        let evaluateTitle = searchResults[i].result.title.toLowerCase().replace(/[^a-z A-Z 0-9 ; : \- & ~`,.]/g, " ");  
         let evaluateArtist = searchResults[i].result.primary_artist.name.toLowerCase();
-        let eSearchSong = searchSong.toLowerCase();
+        let eSearchSong = searchSong.toLowerCase().replace(/[^a-z A-Z 0-9 ; : \- & ~`,.]/g, " ");
         let eSearchArtist = searchArtist.toLowerCase();
         let foundResult = searchResults[i].result;
+        
 
+
+      //  console.log("Title " + i + ": " + evaluateTitle);
+      //  console.log("Artist " + i + ": " + evaluateArtist);
+      //  console.log(eSearchSong);
+      //  console.log(eSearchArtist);
         //return the object where the title and artist match the search term's. Redundant but readable
         //There might be some false positives using this methodology
           if(evaluateTitle === eSearchSong && evaluateArtist === eSearchArtist)
