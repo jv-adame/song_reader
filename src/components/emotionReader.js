@@ -4,7 +4,7 @@ class EmotionReader extends Component{
     render(){
         let energy = Math.ceil(this.props.energy * 100);
         let tempo = Math.ceil(this.props.tempo);
-        let playing = (this.props.song) ? "block" : "none";
+        let playing = (this.props.song) ? "flex" : "none";
         let emotionJSX = this.props.emotion.map((thisArray, index)=>{
             let emotion;
             if (index === 0)
@@ -19,11 +19,11 @@ class EmotionReader extends Component{
             {emotion = "Sadness"}
 
             return(
-              <div>
-                <div className={emotion}>
+              <div className={emotion}>
+                <div >
                   {emotion}:
                 </div>
-                <div className={emotion}>
+                <div>
                   {thisArray}%
                 </div>
               </div>      
@@ -31,21 +31,21 @@ class EmotionReader extends Component{
           });
         return(
             <div>
-              <div className="flexContainer readContainer">
+              <div className="flexContainer readContainer" style={{display:playing}}>
                   {emotionJSX}
-                  <div style={{display:playing}}>
-                    <div className="Tempo">
+                  <div className="Tempo" >
+                    <div >
                       Tempo:
                     </div>
-                    <div className="Tempo" >
+                    <div>
                       {tempo} BPM
                     </div>
                   </div>
-                  <div style={{display:playing}}>
-                    <div className="Energy">
+                  <div className="Energy">
+                    <div >
                       Energy:
                     </div>
-                    <div className="Energy">
+                    <div>
                       {energy}%
                     </div>
                   </div>
