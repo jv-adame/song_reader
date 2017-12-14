@@ -133,12 +133,13 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
       //Exception Handler
       searchSong = exceptions(searchSong);         
   //Only remove ampersand sign for the sake of search query, this character messes with Spotify search results
-  let andCut = searchSong.replace("&", "");
- 
+  let andCut = searchSong.replace("&", "")
+                          .replace("?", "");
+  console.log("Pass to query", andCut);
   let searchArtist = req.params.artist;
-  // console.log("Song:", searchSong);
-  // console.log(searchSong.length);
-  // console.log("Artist:", searchArtist);
+ // console.log("Song:", searchSong);
+ // console.log(searchSong.length);
+  //console.log("Artist:", searchArtist);
   // console.log(searchArtist.length);
   //axios authorization 
     axios({
