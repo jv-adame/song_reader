@@ -233,7 +233,6 @@ class App extends Component {
          </div>
          <div className="wrapper">
             <Animation color={this.state.color} percentage={this.state.percentage} tempo={this.state.tempo} energy={this.state.energy}/>
-            
             <EmotionReader emotion={this.state.emotion} moving={this.state.moving} tempo={this.state.tempo} energy={this.state.energy} song={this.state.song}/>       
             <SearchList setTone={this.setTone} onPause={this.onPause} searchResults={this.state.searchResults} inputTone={this.inputTone}/>
          </div>      

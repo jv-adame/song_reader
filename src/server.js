@@ -174,29 +174,33 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
       //  console.log(eSearchArtist);
         //return the object where the title and artist match the search term's. Redundant but readable
         //There might be some false positives using this methodology
-          if(evaluateTitle === eSearchSong && evaluateArtist === eSearchArtist)
+          if((evaluateTitle === eSearchSong && evaluateArtist === eSearchArtist) || 
+          (evaluateTitle.includes(eSearchSong) && evaluateArtist === eSearchArtist) || 
+          (eSearchSong.includes(evaluateTitle) && evaluateArtist === eSearchArtist) || 
+          (evaluateTitle === eSearchSong && evaluateArtist.includes(eSearchArtist)) || 
+          (evaluateTitle[1] === eSearchSong && evaluateArtist === eSearchArtist))
           {
             found = foundResult; 
           }
-          else if(evaluateTitle.includes(eSearchSong) && evaluateArtist === eSearchArtist){
-            found = foundResult; 
-          }
-          else if(eSearchSong.includes(evaluateTitle) && evaluateArtist === eSearchArtist){
-            found = foundResult; 
-          }
-          else if(evaluateTitle === eSearchSong && evaluateArtist.includes(eSearchArtist))
-          {
-            found = foundResult; 
-          }
-          else if(evaluateTitle === eSearchSong &&  eSearchArtist.includes(evaluateArtist))
-          {
-            found = foundResult; 
-          }
-          //just for Kendrick
-          else if(evaluateTitle[1] === eSearchSong && evaluateArtist === eSearchArtist)
-          {
-            found = foundResult; 
-          }
+          // else if(evaluateTitle.includes(eSearchSong) && evaluateArtist === eSearchArtist){
+          //   found = foundResult; 
+          // }
+          // else if(eSearchSong.includes(evaluateTitle) && evaluateArtist === eSearchArtist){
+          //   found = foundResult; 
+          // }
+          // else if(evaluateTitle === eSearchSong && evaluateArtist.includes(eSearchArtist))
+          // {
+          //   found = foundResult; 
+          // }
+          // else if(evaluateTitle === eSearchSong &&  eSearchArtist.includes(evaluateArtist))
+          // {
+          //   found = foundResult; 
+          // }
+          // //just for Kendrick
+          // else if(evaluateTitle[1] === eSearchSong && evaluateArtist === eSearchArtist)
+          // {
+          //   found = foundResult; 
+          // }
       }
 
       //Kendrick Lamar Logic bomb: why doesn't "i" === "i"?
