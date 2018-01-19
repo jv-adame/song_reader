@@ -135,7 +135,7 @@ class App extends Component {
     }
     else if (colorList[0] >= 20 && colorList[0] < 40)
     {
-      copy[0] = "red";
+      copy[0] = "#ff5151";
     }
     else if (colorList[0] >= 40 && colorList[0] < 60)
     {
@@ -167,7 +167,7 @@ class App extends Component {
     }
     else if (colorList[2] >= 20 && colorList[2] < 40)
     {
-      copy[2] = "purple";
+      copy[2] = "#884fd1";
     }
     else if (colorList[2] >= 40 && colorList[2] < 60)
     {
@@ -183,7 +183,7 @@ class App extends Component {
     }
     else if (colorList[3] >= 20 && colorList[3] < 40)
     {
-      copy[3] = "yellow";
+      copy[3] = "#ffee35";
     }
     else if (colorList[3] >= 40 && colorList[3] < 60)
     {
@@ -199,7 +199,7 @@ class App extends Component {
     }
     else if (colorList[3] >= 20 && colorList[4] < 40)
     {
-      copy[4] = "blue";
+      copy[4] = "#3578d6";
     }
     else if (colorList[3] >= 40 && colorList[4] < 60)
     {
