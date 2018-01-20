@@ -186,25 +186,6 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
           {
             found = foundResult; 
           }
-          // else if(evaluateTitle.includes(eSearchSong) && evaluateArtist === eSearchArtist){
-          //   found = foundResult; 
-          // }
-          // else if(eSearchSong.includes(evaluateTitle) && evaluateArtist === eSearchArtist){
-          //   found = foundResult; 
-          // }
-          // else if(evaluateTitle === eSearchSong && evaluateArtist.includes(eSearchArtist))
-          // {
-          //   found = foundResult; 
-          // }
-          // else if(evaluateTitle === eSearchSong &&  eSearchArtist.includes(evaluateArtist))
-          // {
-          //   found = foundResult; 
-          // }
-          // //just for Kendrick
-          // else if(evaluateTitle[1] === eSearchSong && evaluateArtist === eSearchArtist)
-          // {
-          //   found = foundResult; 
-          // }
       }
 
       //Kendrick Lamar Logic bomb: why doesn't "i" === "i"?
