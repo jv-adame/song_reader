@@ -135,8 +135,12 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
   //Only remove ampersand sign for the sake of search query, this character messes with Spotify search results
   let andCut = searchSong.replace("&", "")
                           .replace("?", "");
-  console.log("Pass to query", andCut);
-  let searchArtist = req.params.artist;
+
+  //The rule below might have some reprecussions.  
+  //Artists like Ray Parker Jr. are listed with commas with their names in Spotify
+  let searchArtist = req.params.artist
+                      .replace(",", "");
+  console.log("Pass to query", andCut + " " + searchArtist);
  // console.log("Song:", searchSong);
  // console.log(searchSong.length);
   //console.log("Artist:", searchArtist);
