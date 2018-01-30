@@ -18,56 +18,6 @@ app.use((req, res, next)=> {
     next();
   });
 
-//Test stuff, re-examining the json sent back
-
-app.get("/test/:query", (req, res)=>{
-  let search = req.params.query;
-
-  //Spotify Authorization
-  axios({
-    url: 'https://accounts.spotify.com/api/token',
-    method: 'post',
-    params: {
-      grant_type: 'client_credentials'
-    },
-    headers: {
-      'Accept':'application/json',
-      'Content-Type': 'application/x-www-form-urlencoded'
-    },
-    auth: {
-      username: spotify.user,
-      password: spotify.pass
-    }
-  }).then((authorized)=>{
-    //Receiving data to pass to app
-    axios({
-      url: "https://api.spotify.com/v1/search?q=" + search + "&type=track&limit=5",
-      method: "get",
-      params: {
-        "Accept": "application/json",
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      headers: {
-        "Authorization": "Bearer " + authorized.data.access_token
-      }
-    })
-    .then((response)=>{
-     // console.log(response.data.tracks.items[0]);
-      //let json = CircularJSON.stringify(response.data.tracks);
-      let json = response.data.tracks.items[1];
-    //  let json = response.data.tracks.items[2].artists;
-      res.send(json);
-    })
-    .catch((error)=>{ 
-      let json = CircularJSON.stringify(error);
-      res.send(json);
-    })
-  }).catch((error)=> {
-  });
-});
-
-
-
 //Spotify search call
 app.get("/search/:query", (req, res)=>{
   let search = req.params.query;
@@ -186,22 +136,14 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
       //Exception Handler
       searchSong = exceptions(searchSong);         
   //Only remove ampersand sign for the sake of search query, this character messes with Spotify search results
+  //A question mark (?) next to a forward slash (/) also causes a defunct query
   let querySong = searchSong.replace("&", "")
                           .replace("?", "");
 
-  //The rule below might have some reprecussions.  
-  //Artists like Ray Parker Jr. are listed with commas with their names in Spotify
-
-  //****this argument will be an array, prepare accordingly
-  console.log("Current Artist Paremeter:", req.params.artist);
-
-  
   //Seperates artists into an array when there are more than one credited
   let searchArtist = req.params.artist.toString().split(",");
-  //simplify the artist entry entered into the API call
+  //simplify the artist entry entered into the Genius.com API call
   let queryArtist = searchArtist[0];            
-  console.log("Query artist:", queryArtist);        
-  console.log("Pass to query", querySong + " " + queryArtist);
 
   //axios authorization 
     axios({
@@ -254,6 +196,7 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
         
       } //end loop
      // console.log("We found:", found); 
+
       //Kendrick Lamar Logic bomb: why doesn't "i" === "i"?
       // let logic = searchResults[0].result.title[1].toUpperCase() === searchSong.toUpperCase();
       //Turns out it's the api's fault: Api side title was two characters (somehow?)
@@ -303,7 +246,23 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
             header: "X-Watson-Learning-Opt-Out: true"      
           })
           .then((response)=> {
-            res.send(response.data.document_tone.tone_categories[0].tones);
+              
+              let insert = [
+                {score: 0.33},
+                {score: 0.33},
+                {score: 0.33},
+                {score: 0.33},
+                {score: 0.33}
+              ]
+              //if lyrics contain the word "instrumental" with only spaces preceding and following the string and nothing else, send placeholder 
+              if (lyrics.toLowerCase().includes(" instrumental ")){
+                res.send(insert);
+              }
+              else
+              {
+                res.send(response.data.document_tone.tone_categories[0].tones);
+              }
+            
           })
         .catch((error)=> {
           console.log("Breakpoint 1:", error);
