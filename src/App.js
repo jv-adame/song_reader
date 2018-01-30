@@ -49,6 +49,13 @@ class App extends Component {
       let queryResults = [];
       for (let i = 0; i < result.data.items.length; i++)
       {
+        //test for new way to store list of artists
+        let artistList = [];
+        for (let j = 0; j < result.data.items[i].artists.length; j++)
+        {
+            artistList[j] = result.data.items[i].artists[j].name;
+        }
+        console.log("list of artists:", artistList);
         //snippet artists: result.data.items[i].album.artists[0].name,
         let entry = {
           name: result.data.items[i].name,
