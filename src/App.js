@@ -49,7 +49,7 @@ class App extends Component {
       let queryResults = [];
       for (let i = 0; i < result.data.items.length; i++)
       {
-        //test for new way to store list of artists
+       
         let artistList = [];
         for (let j = 0; j < result.data.items[i].artists.length; j++)
         {

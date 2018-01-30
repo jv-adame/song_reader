@@ -167,6 +167,7 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
         //query is substring of title
         //Spotify and Genius use different characters for apostraphes.  This remove any non standard characters for the sake of evaluation including all apostraphes
         let evaluateTitle = searchResults[i].result.title.toLowerCase().replace(/[^a-z A-Z 0-9 ; : \- & ~`,.]/g, " ");  
+        //***NOTE*** normalize accented letters from evaluateArtist to match Spotify's artist naming convention
         let evaluateArtist = searchResults[i].result.primary_artist.name.toLowerCase();
         let eSearchSong = searchSong.toLowerCase().replace(/[^a-z A-Z 0-9 ; : \- & ~`,.]/g, " ");
         

@@ -1,30 +1,7 @@
 import React, {Component} from 'react';
 import watson from "../images/watson.png";
 
-//Song playing will have onClick={()=>this.props.setTone(arr[i].index)}
-
 class searchList extends Component{
-    constructor(){
-        super();
-
-        this.clickHandler = this.clickHandler.bind(this);
-    }
-    
-    componentDidMount(){
-       // console.log(document.getElementById("play-button"));
-        if(document.getElementById("play-button"))
-        {
-            document.getElementById("play-button").addEventListener("click", this.clickHandler);
-        }        
-    }
-
-    
-    componentWillUnmount(){
-        document.getElementById("play-button").removeEventListener("click", this.clickHandler);
-    }
-    clickHandler(event){
-        alert("hello");
-    }
 
     render(){
 
