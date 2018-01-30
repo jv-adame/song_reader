@@ -49,10 +49,10 @@ class App extends Component {
       let queryResults = [];
       for (let i = 0; i < result.data.items.length; i++)
       {
-
+        //snippet artists: result.data.items[i].album.artists[0].name,
         let entry = {
           name: result.data.items[i].name,
-          artists: result.data.items[i].album.artists[0].name,
+          artists: result.data.items[i].artists[0].name,
           album: result.data.items[i].album.name,
           albumCover: result.data.items[i].album.images[0].url,
           id: result.data.items[i].id,

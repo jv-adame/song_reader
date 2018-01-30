@@ -18,6 +18,56 @@ app.use((req, res, next)=> {
     next();
   });
 
+//Test stuff, re-examining the json sent back
+
+app.get("/test/:query", (req, res)=>{
+  let search = req.params.query;
+
+  //Spotify Authorization
+  axios({
+    url: 'https://accounts.spotify.com/api/token',
+    method: 'post',
+    params: {
+      grant_type: 'client_credentials'
+    },
+    headers: {
+      'Accept':'application/json',
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    auth: {
+      username: spotify.user,
+      password: spotify.pass
+    }
+  }).then((authorized)=>{
+    //Receiving data to pass to app
+    axios({
+      url: "https://api.spotify.com/v1/search?q=" + search + "&type=track&limit=5",
+      method: "get",
+      params: {
+        "Accept": "application/json",
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      headers: {
+        "Authorization": "Bearer " + authorized.data.access_token
+      }
+    })
+    .then((response)=>{
+     // console.log(response.data.tracks.items[0]);
+      //let json = CircularJSON.stringify(response.data.tracks);
+      //let json = response.data.tracks.items[0].artists[0].name;
+      let json = response.data.tracks.items[0].artists;
+      res.send(json);
+    })
+    .catch((error)=>{ 
+      let json = CircularJSON.stringify(error);
+      res.send(json);
+    })
+  }).catch((error)=> {
+  });
+});
+
+
+
 //Spotify search call
 app.get("/search/:query", (req, res)=>{
   let search = req.params.query;
@@ -51,6 +101,7 @@ app.get("/search/:query", (req, res)=>{
       }
     })
     .then((response)=>{
+     // console.log(response.data.tracks.items[0]);
       let json = CircularJSON.stringify(response.data.tracks);
       res.send(json);
     })
@@ -116,13 +167,15 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
   //Panic at the Disco and Fall Out Boy should be safe.  
   //The regular expressions below changes Spotify given titles to be in line with Genius.com's song title conventions
   
-  //First .replace(): removes all artists credited as (with <artist name>) from song title
-  //Second .replace(): removes all artists credited as (feat. <artist name>) from song title
-  //Third .replace(): removes parts of common Spotify song titles like " - Remastered"
-  //Fourth .replace(): removes any text in square brackets in song title (WHY?!?!?!)
-  //Fifth .replace(): removes all titles with (Parody of <song name>) in title.  Weird Al clause
-  //Sixth .replace(): Trims any excess (more than one) space
+  //First .replace(): Changes any irregular spotify apostraphes to be in line with Genius.com's conventions
+  //Second .replace(): removes all artists credited as (with <artist name>) from song title
+  //Third .replace(): removes all artists credited as (feat. <artist name>) from song title
+  //Fourth .replace(): removes parts of common Spotify song titles like " - Remastered"
+  //Fifth .replace(): removes any text in square brackets in song title (WHY?!?!?!)
+  //Sixth .replace(): removes all titles with (Parody of <song name>) in title.  Weird Al clause
+  //Seventh .replace(): Trims any excess (more than one) space
   let searchSong = req.params.song             
+                    .replace("’", "'")
                     .replace(/\(with.*\)/g, "")
                     .replace(/\(feat.*\)/g, "")
                     .replace(/ - .*/g, "")
