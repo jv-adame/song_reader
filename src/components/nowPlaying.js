@@ -5,7 +5,7 @@ class NowPlaying extends Component{
 
     render(){
         let playingSong = this.props.song;
-        let playingArtist = this.props.artist;
+        let playingArtist = this.props.artist[0];
         return(
             <div className="nowPlaying">
                <h2> {(playingSong) ? "Now Animating:" : ""} {playingSong} {(playingSong) ? "-" : ""} {playingArtist}</h2>

@@ -54,8 +54,8 @@ app.get("/test/:query", (req, res)=>{
     .then((response)=>{
      // console.log(response.data.tracks.items[0]);
       //let json = CircularJSON.stringify(response.data.tracks);
-      //let json = response.data.tracks.items[0].artists[0].name;
-      let json = response.data.tracks.items[0].artists;
+      let json = response.data.tracks.items[1];
+    //  let json = response.data.tracks.items[2].artists;
       res.send(json);
     })
     .catch((error)=>{ 
@@ -191,13 +191,17 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
 
   //The rule below might have some reprecussions.  
   //Artists like Ray Parker Jr. are listed with commas with their names in Spotify
-  let searchArtist = req.params.artist
-                      .replace(",", "");
+
+  //****this argument will be an array, prepare accordingly
+  console.log("Current Artist Paremeter:", req.params.artist);
+
+  
+  // let searchArtist = req.params.artist
+  //                     .replace(",", "");
+  let searchArtist = req.params.artist.toString().split(",");
+                          
   console.log("Pass to query", andCut + " " + searchArtist);
- // console.log("Song:", searchSong);
- // console.log(searchSong.length);
-  //console.log("Artist:", searchArtist);
-  // console.log(searchArtist.length);
+
   //axios authorization 
     axios({
       url: "http://api.genius.com/search?q=" + andCut + " " + searchArtist,
@@ -213,6 +217,8 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
     .then((response)=>{
       let searchResults = response.data.response.hits;
       let found;
+
+      //change loop below to break once result is found
       for(i = 0; i < searchResults.length; i++)
       {
         //query is substring of title
@@ -220,27 +226,31 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
         let evaluateTitle = searchResults[i].result.title.toLowerCase().replace(/[^a-z A-Z 0-9 ; : \- & ~`,.]/g, " ");  
         let evaluateArtist = searchResults[i].result.primary_artist.name.toLowerCase();
         let eSearchSong = searchSong.toLowerCase().replace(/[^a-z A-Z 0-9 ; : \- & ~`,.]/g, " ");
-        let eSearchArtist = searchArtist.toLowerCase();
-        let foundResult = searchResults[i].result;
         
+        let foundResult = searchResults[i].result;    
+        
+        
+        //search for every artist in the array
+        for (j = 0; j < searchArtist.length; j++)
+        {
+        
+          let eSearchArtist = searchArtist[j].toLowerCase();
 
-
-      //  console.log("Title " + i + ": " + evaluateTitle);
-      //  console.log("Artist " + i + ": " + evaluateArtist);
-      //  console.log(eSearchSong);
-      //  console.log(eSearchArtist);
         //return the object where the title and artist match the search term's. Redundant but readable
         //There might be some false positives using this methodology
           if((evaluateTitle === eSearchSong && evaluateArtist === eSearchArtist) || 
           (evaluateTitle.includes(eSearchSong) && evaluateArtist === eSearchArtist) || 
           (eSearchSong.includes(evaluateTitle) && evaluateArtist === eSearchArtist) || 
-          (evaluateTitle === eSearchSong && evaluateArtist.includes(eSearchArtist)) || 
+          (evaluateTitle === eSearchSong && evaluateArtist.includes(eSearchArtist)) ||
+          (evaluateTitle.includes(eSearchSong) && evaluateArtist.includes(eSearchArtist)) ||
           (evaluateTitle[1] === eSearchSong && evaluateArtist === eSearchArtist))
           {
             found = foundResult; 
           }
-      }
-
+        }
+        
+      } //end loop
+      console.log("We found:", found); 
       //Kendrick Lamar Logic bomb: why doesn't "i" === "i"?
       // let logic = searchResults[0].result.title[1].toUpperCase() === searchSong.toUpperCase();
       //Turns out it's the api's fault: Api side title was two characters (somehow?)

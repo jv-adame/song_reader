@@ -56,16 +56,17 @@ class App extends Component {
             artistList[j] = result.data.items[i].artists[j].name;
         }
         console.log("list of artists:", artistList);
-        //snippet artists: result.data.items[i].album.artists[0].name,
+        //snippet artists: result.data.items[i].artists[0].name,
         let entry = {
           name: result.data.items[i].name,
-          artists: result.data.items[i].artists[0].name,
+          artists: artistList,
           album: result.data.items[i].album.name,
           albumCover: result.data.items[i].album.images[0].url,
           id: result.data.items[i].id,
           uri: result.data.items[i].uri,
         }
         queryResults.push(entry);
+        console.log("Entry #" + i + " " + entry.artists);
       }
       this.setState({
         searchResults: queryResults
