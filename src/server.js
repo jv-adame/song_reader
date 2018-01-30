@@ -133,7 +133,7 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
                     .replace(/ \(Parody.*\)/g, "")
                     .replace(/ * {2,} /g, "");
             
-      //Exception Handler
+      //Exception Handler: Evaluates string in exceptions.js
       searchSong = exceptions(searchSong);         
   //Only remove ampersand sign for the sake of search query, this character messes with Spotify search results
   //A question mark (?) next to a forward slash (/) also causes a defunct query
