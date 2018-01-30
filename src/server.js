@@ -6,6 +6,7 @@ const config = require("./config"),
     spotify = config.spotify_api_key;
     genius = config.genius_api_key;
 const exceptions = require("./exceptions/exceptions");
+const accent = require("./exceptions/accentNormalize");
 const express = require('express'),
     app = express(),
     PORT = process.env.PORT || 8080;
