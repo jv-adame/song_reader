@@ -186,7 +186,7 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
       //Exception Handler
       searchSong = exceptions(searchSong);         
   //Only remove ampersand sign for the sake of search query, this character messes with Spotify search results
-  let andCut = searchSong.replace("&", "")
+  let querySong = searchSong.replace("&", "")
                           .replace("?", "");
 
   //The rule below might have some reprecussions.  
@@ -196,15 +196,16 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
   console.log("Current Artist Paremeter:", req.params.artist);
 
   
-  // let searchArtist = req.params.artist
-  //                     .replace(",", "");
+  //Seperates artists into an array when there are more than one credited
   let searchArtist = req.params.artist.toString().split(",");
-                          
-  console.log("Pass to query", andCut + " " + searchArtist);
+  //simplify the artist entry entered into the API call
+  let queryArtist = searchArtist[0];            
+  console.log("Query artist:", queryArtist);        
+  console.log("Pass to query", querySong + " " + queryArtist);
 
   //axios authorization 
     axios({
-      url: "http://api.genius.com/search?q=" + andCut + " " + searchArtist,
+      url: "http://api.genius.com/search?q=" + querySong + " " + queryArtist,
       method: "get",
       params: {
         "Accept": "application/json",
@@ -229,6 +230,8 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
         
         let foundResult = searchResults[i].result;    
         
+        console.log("matching song:", evaluateTitle);
+        console.log("matching artist:", evaluateArtist);
         
         //search for every artist in the array
         for (j = 0; j < searchArtist.length; j++)
@@ -250,7 +253,7 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
         }
         
       } //end loop
-      console.log("We found:", found); 
+     // console.log("We found:", found); 
       //Kendrick Lamar Logic bomb: why doesn't "i" === "i"?
       // let logic = searchResults[0].result.title[1].toUpperCase() === searchSong.toUpperCase();
       //Turns out it's the api's fault: Api side title was two characters (somehow?)
@@ -293,7 +296,7 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
             .replace(/\s/g, " ");
 
           //test for false positives
-         //console.log(lyrics);
+         console.log(lyrics);
           
           //Watson Lyric Analysis
           axios.get("https://"+ watson.user +":"+ watson.pass +"@gateway.watsonplatform.net/tone-analyzer/api/v3/tone?version=2016-05-19&text=" + lyrics, {   
