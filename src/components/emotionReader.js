@@ -4,8 +4,11 @@ class EmotionReader extends Component{
     render(){
         let energy = Math.ceil(this.props.energy * 100);
         let tempo = Math.ceil(this.props.tempo);
-        //Use this value for error messages
+        //Only for use in error messages
+        let playingSong = this.props.song;
+        let playingArtist = this.props.artist[0];
         let p = Array.from(this.props.percentage);
+        //error message end
         let instrumental = ((p[0] === p[1]) && p[0] === 33);
         let cantFind = ((p[0] === p[1]) && p[0] === 66);
         let playing = (this.props.song) ? "flex" : "none";
@@ -38,7 +41,7 @@ class EmotionReader extends Component{
         {
           return(
             <div className="errorMessage">
-              <h2>The song being analyzed is an instrumental</h2>
+              <h2>The song "{playingSong} by {playingArtist}" is an instrumental</h2>
             </div>
           )
         }
@@ -46,7 +49,7 @@ class EmotionReader extends Component{
         {
           return(
             <div className="errorMessage">
-              <h2>The analyzed song cannot be found</h2>
+              <h2>The song "{playingSong} by {playingArtist}"" cannot be found</h2>
             </div>
           )
 
