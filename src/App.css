@@ -157,6 +157,9 @@ input{
   color: white;
   margin: auto 0;
 }
+.errorMessage{
+  color: white;
+}
 iframe{
   /* border: none; */
   border-radius: 5px;
