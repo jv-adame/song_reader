@@ -211,8 +211,7 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
       // }
       // console.log(show);
 
-      //If specific artist/song combination cannot be found in genius.com do something
-      //Flesh out more to alter emotionReader client side
+      //If specific artist/song combination cannot be found in genius.com give the following data
       if(!found || !found.url)
       {
         let placeholder = [
