@@ -6,8 +6,8 @@ class EmotionReader extends Component{
             let playingSong = this.props.song;
             let playingArtist = this.props.artist[0];
             let p = Array.from(this.props.percentage);
-            let instrumental = ((p[0] === p[1]) && p[0] === 33);
-            let cantFind = ((p[0] === p[1]) && p[0] === 66);
+            let instrumental = ((p[0] === p[1]) && p[0] === 33) ? "is an instrumental" : "" ;
+            let cantFind = ((p[0] === p[1]) && p[0] === 66) ? "cannot be found" : "";
         //error message end
         let energy = Math.ceil(this.props.energy * 100);
         let tempo = Math.ceil(this.props.tempo);
@@ -37,22 +37,16 @@ class EmotionReader extends Component{
               </div>      
             )
           });
-        if (instrumental)
+        //If the given song is an instrumental or cannot be found on Genius.com, display error message
+        if (instrumental || cantFind)
         {
           return(
             <div className="errorMessage readContainer">
-              <h2>The song "{playingSong} by {playingArtist}" is an instrumental</h2>
+              <h2>The song "{playingSong} by {playingArtist}" {instrumental}{cantFind}</h2>
             </div>
           )
         }
-        else if (cantFind)
-        {
-          return(
-            <div className="errorMessage readContainer">
-              <h2>The song "{playingSong} by {playingArtist}" cannot be found</h2>
-            </div>
-          )
-        }
+        //Otherwise display analysis of song
         else{
           return(
             <div>
