@@ -6,6 +6,8 @@
 //Fourth .replace(): Edge case for Main Title Theme - Elmer Bernstein with subtitle (Ghostbusters)
 //Fifth .replace(): Edge case for End Credits - Jurassic Park with /Soundtrack appended, categorized as "End Credits - Jurassic Park"
 //Sixth .replace(): Edge case for Christmas Eve/Sarajevo (12/24) - Trans-Siberian Orchestra due to limits with forward slashes in queries
+//Seventh .replace(): Edge case for Captain Underpants Theme Song - "Weird Al" Yankovic, categorized simply as "Captain Underpants"
+//Eighth .replace(): Edge case for "Party In the CIA" - "Weird Al" Yankovic, categorized as "Party In the C.I.A."
 module.exports =  function refine(title){
     let newCredit = title
         .replace(/\(So.*\)/g, "")
@@ -13,7 +15,9 @@ module.exports =  function refine(title){
         .replace(/\(The Official.*\)/g, "")
         .replace(/(Ghostbusters)/g, "")
         .replace(/\/Soundtrack/g, "")
-        .replace("Christmas Eve  Sarajevo", "Christmas Eve Sarajevo  12 24 ");
+        .replace("Christmas Eve  Sarajevo", "Christmas Eve Sarajevo  12 24 ")
+        .replace("Captain Underpants Theme Song", "Captain Underpants")
+        .replace("Party In the CIA", "Party in the C.I.A.");
         
     return newCredit;    
 }

@@ -124,7 +124,8 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
   //Fourth .replace(): removes parts of common Spotify song titles like " - Remastered"
   //Fifth .replace(): removes any text in square brackets in song title (WHY?!?!?!)
   //Sixth .replace(): removes all titles with (Parody of <song name>) in title.  Weird Al clause
-  //Seventh .replace(): Trims any excess (more than one) space
+  //Seventh .replace(): removes any songs titled as (Acoustic <anything>) from song title
+  //Eighth .replace(): Trims any excess (more than one) space
   let searchSong = req.params.song    
                     .replace("/", " ")         
                     .replace("’", "'")
@@ -133,6 +134,7 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
                     .replace(/ - .*/g, "")
                     .replace(/\[.*\]/g, "")
                     .replace(/ \(Parody.*\)/g, "")
+                    .replace(/\(Acoustic.*\)/g, "")
                     .replace(/ * {2,} /g, "");
             
       //Exception Handler: Evaluates string in exceptions.js
