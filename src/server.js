@@ -118,7 +118,7 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
   //Panic at the Disco and Fall Out Boy should be safe.  
   //The regular expressions below changes Spotify given titles to be in line with Genius.com's song title conventions
   
-  //First .replace(): Changes any irregular spotify apostraphes to be in line with Genius.com's conventions
+  //First .replace(): Changes any irregular Spotify apostraphes to be in line with Genius.com's conventions
   //Second .replace(): removes all artists credited as (with <artist name>) from song title
   //Third .replace(): removes all artists credited as (feat. <artist name>) from song title
   //Fourth .replace(): removes parts of common Spotify song titles like " - Remastered"

@@ -79,9 +79,11 @@ class App extends Component {
 
   //Pass arguments to Genius API call
   inputTone(song, artist, id){
-      //Having a question mark at the end of the song title and next to the slash messes up the axios call.  
+      //Having a question mark at the end of the song title and next to the slash messes up the axios call.
+      //Having slashes other than the ones already indicated in the localhost path break the query
       //This may encompass more characters
-      let songTitle = song.replace("?", "");
+      let songTitle = song.replace("?", "")
+                          .replace("/", " ");
       axios.get("http://localhost:8080/lyrics/" + songTitle + "/" + artist)
       .then((result)=>{
         axios.get("http://localhost:8080/tempo/" + id)
