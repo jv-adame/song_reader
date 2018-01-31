@@ -42,7 +42,7 @@ class EmotionReader extends Component{
         {
           return(
             <div className="errorMessage readContainer">
-              <h2>The song "{playingSong} by {playingArtist}" {instrumental}{cantFind}</h2>
+              <h2>The song "{playingSong}" by {playingArtist} {instrumental}{cantFind}</h2>
             </div>
           )
         }
