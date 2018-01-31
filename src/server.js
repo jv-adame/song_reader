@@ -125,7 +125,8 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
   //Fifth .replace(): removes any text in square brackets in song title (WHY?!?!?!)
   //Sixth .replace(): removes all titles with (Parody of <song name>) in title.  Weird Al clause
   //Seventh .replace(): Trims any excess (more than one) space
-  let searchSong = req.params.song             
+  let searchSong = req.params.song    
+                    .replace("/", " ")         
                     .replace("’", "'")
                     .replace(/\(with.*\)/g, "")
                     .replace(/\(feat.*\)/g, "")
@@ -135,7 +136,7 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
                     .replace(/ * {2,} /g, "");
             
       //Exception Handler: Evaluates string in exceptions.js
-      searchSong = exceptions(searchSong);         
+      searchSong = exceptions(searchSong);    
   //Only remove ampersand sign for the sake of search query, this character messes with Spotify search results
   //A question mark (?) next to a forward slash (/) also causes a defunct query
   let querySong = searchSong.replace("&", "")
@@ -173,7 +174,7 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
         let eSearchSong = searchSong.toLowerCase().replace(/[^a-z A-Z 0-9 ; : \- & ~`,.]/g, " ");
         
         let foundResult = searchResults[i].result;    
-        
+        console.log("search song:", eSearchSong);
         console.log("matching song:", evaluateTitle);
         console.log("matching artist:", evaluateArtist);
         
@@ -232,17 +233,15 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
           const fill = [];
           let $ = cheerio.load(response.data);
 
-          //First .replace(): Wipeout all square brackets and characters between square brackets
+          //First .replace(): Wipeout all square brackets and characters between square brackets that is not the phrase "Instrumental"
           //Second .replace(): Wipeout any character that is NOT listed within the square brackets
           //Third .replace(): Reduce any excess white space
         let lyrics = $(".lyrics").text()
-            .replace(/\[.*\]/g, "")
+            .replace(/^\[((?!Instrumental).)*\]$/gm, "")
             .replace(/[^a-z A-Z 0-9 ; : \- & ~`',.]/g, " ")
             .replace(/\s/g, " ");
-
-          //test for false positives
-         console.log(lyrics);
-          
+         
+          console.log("lyrics:", lyrics);
           //Watson Lyric Analysis
           axios.get("https://"+ watson.user +":"+ watson.pass +"@gateway.watsonplatform.net/tone-analyzer/api/v3/tone?version=2016-05-19&text=" + lyrics, {   
             header: "X-Watson-Learning-Opt-Out: true"      
