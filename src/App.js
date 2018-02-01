@@ -44,7 +44,8 @@ class App extends Component {
 
   //Populate based on search query
   search(query){
-    axios.get("http://localhost:8080/search/" + query)
+
+    axios.get("http://localhost:8080/search/" + query.replace("/", " "))
     .then((result)=>{
       let queryResults = [];
       for (let i = 0; i < result.data.items.length; i++)
@@ -81,9 +82,10 @@ class App extends Component {
   inputTone(song, artist, id){
       //Having a question mark at the end of the song title and next to the slash messes up the axios call.
       //Having slashes other than the ones already indicated in the localhost path break the query
+      //Passing the "/" in as characters that the query can accept while turning it back into a slash server side for search purposes
       //This may encompass more characters
       let songTitle = song.replace("?", "")
-                          .replace("/", " ");
+                          .replace("/", "_-_");
       axios.get("http://localhost:8080/lyrics/" + songTitle + "/" + artist)
       .then((result)=>{
         axios.get("http://localhost:8080/tempo/" + id)

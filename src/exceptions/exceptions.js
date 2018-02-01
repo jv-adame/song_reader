@@ -16,7 +16,7 @@ module.exports =  function refine(title){
         .replace(/\(The Official.*\)/g, "")
         .replace(/(Ghostbusters)/g, "")
         .replace(/\/Soundtrack/g, "")
-        .replace("Christmas Eve  Sarajevo", "Christmas Eve Sarajevo  12 24 ")
+        .replace("Christmas Eve/ Sarajevo", "Christmas Eve/Sarajevo (12/24)")
         .replace("Captain Underpants Theme Song", "Captain Underpants")
         .replace("Party In the CIA", "Party in the C.I.A.")
         .replace("100s and Hope", "100s & Hope");

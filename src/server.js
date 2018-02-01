@@ -126,9 +126,9 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
   //Sixth .replace(): removes all titles with (Parody of <song name>) in title.  Weird Al clause
   //Seventh .replace(): removes any songs titled as (Acoustic <anything>) from song title
   //Eighth .replace(): Trims any excess (more than one) space
-  let searchSong = req.params.song    
-                    .replace("/", " ")         
+  let searchSong = req.params.song          
                     .replace("’", "'")
+                    .replace("_-_", "/")
                     .replace(/\(with.*\)/g, "")
                     .replace(/\(feat.*\)/g, "")
                     .replace(/ - .*/g, "")
@@ -142,6 +142,7 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
   //Only remove ampersand sign for the sake of search query, this character messes with Spotify search results
   //A question mark (?) next to a forward slash (/) also causes a defunct query
   let querySong = searchSong.replace("&", "")
+                          .replace("/", "")
                           .replace("?", "");
 
   //Seperates artists into an array when there are more than one credited
@@ -170,10 +171,10 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
       {
         //query is substring of title
         //Spotify and Genius use different characters for apostraphes.  This remove any non standard characters for the sake of evaluation including all apostraphes
-        let evaluateTitle = searchResults[i].result.title.toLowerCase().replace(/[^a-z A-Z 0-9 ; : \- & ~`,.]/g, " ");  
+        let evaluateTitle = searchResults[i].result.title.toLowerCase().replace(/[^a-z A-Z 0-9 ; : \- & ~`,.()/]/g, " ");  
         //Normalizes accented letters from evaluateArtist to match Spotify's artist naming convention
         let evaluateArtist = accent(searchResults[i].result.primary_artist.name.toLowerCase());
-        let eSearchSong = searchSong.toLowerCase().replace(/[^a-z A-Z 0-9 ; : \- & ~`,.]/g, " ");
+        let eSearchSong = searchSong.toLowerCase().replace(/[^a-z A-Z 0-9 ; : \- & ~`,.()/]/g, " ");
         
         let foundResult = searchResults[i].result;    
         console.log("search song:", eSearchSong);
