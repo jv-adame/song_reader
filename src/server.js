@@ -119,13 +119,14 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
   //The regular expressions below changes Spotify given titles to be in line with Genius.com's song title conventions
   
   //First .replace(): Changes any irregular Spotify apostraphes to be in line with Genius.com's conventions
-  //Second .replace(): removes all artists credited as (with <artist name>) from song title
-  //Third .replace(): removes all artists credited as (feat. <artist name>) from song title
-  //Fourth .replace(): removes parts of common Spotify song titles like " - Remastered"
-  //Fifth .replace(): removes any text in square brackets in song title (WHY?!?!?!)
-  //Sixth .replace(): removes all titles with (Parody of <song name>) in title.  Weird Al clause
-  //Seventh .replace(): removes any songs titled as (Acoustic <anything>) from song title
-  //Eighth .replace(): Trims any excess (more than one) space
+  //Second .replace(): Changes the forward slash placeholder characters into a forward slash for search query purposes
+  //Third .replace(): removes all artists credited as (with <artist name>) from song title
+  //Fourth .replace(): removes all artists credited as (feat. <artist name>) from song title
+  //Fifth .replace(): removes parts of common Spotify song titles like " - Remastered"
+  //Sixth .replace(): removes any text in square brackets in song title (WHY?!?!?!)
+  //Seventh .replace(): removes all titles with (Parody of <song name>) in title.  Weird Al clause
+  //Eighth .replace(): removes any songs titled as (Acoustic <anything>) from song title
+  //Ninth .replace(): Trims any excess (more than one) space
   let searchSong = req.params.song          
                     .replace("’", "'")
                     .replace("_-_", "/")
@@ -142,7 +143,7 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
   //Only remove ampersand sign for the sake of search query, this character messes with Spotify search results
   //A question mark (?) next to a forward slash (/) also causes a defunct query
   let querySong = searchSong.replace("&", "")
-                          .replace("/", "")
+                          .replace("/", " ")
                           .replace("?", "");
 
   //Seperates artists into an array when there are more than one credited
@@ -171,7 +172,8 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
       {
         //query is substring of title
         //Spotify and Genius use different characters for apostraphes.  This remove any non standard characters for the sake of evaluation including all apostraphes
-        let evaluateTitle = searchResults[i].result.title.toLowerCase().replace(/[^a-z A-Z 0-9 ; : \- & ~`,.()/]/g, " ");  
+        let evaluateTitle = accent(searchResults[i].result.title.toLowerCase()).replace(/[^a-z A-Z 0-9 ; : \- & ~`,.()/]/g, " "); 
+        // let evaluateTitle  
         //Normalizes accented letters from evaluateArtist to match Spotify's artist naming convention
         let evaluateArtist = accent(searchResults[i].result.primary_artist.name.toLowerCase());
         let eSearchSong = searchSong.toLowerCase().replace(/[^a-z A-Z 0-9 ; : \- & ~`,.()/]/g, " ");

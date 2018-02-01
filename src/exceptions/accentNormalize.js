@@ -7,6 +7,7 @@ module.exports =  function accent(name){
         .replace(/[áà]/g, "a")
         .replace(/[éè]/g, "e")
         .replace(/[íì]/g, "i")
+        .replace(/[ñ]/g, "n")
         .replace(/[óò]/g, "o")
         .replace(/[úù]/g, "u");
 

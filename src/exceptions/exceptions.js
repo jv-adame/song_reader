@@ -5,7 +5,7 @@
 //Third .replace():  Edge case for Waka Waka - Shakira with subtitle (The Official 2010 FIFA World Cup (TM) Song)
 //Fourth .replace(): Edge case for Main Title Theme - Elmer Bernstein with subtitle (Ghostbusters)
 //Fifth .replace(): Edge case for End Credits - Jurassic Park with /Soundtrack appended, categorized as "End Credits - Jurassic Park"
-//Sixth .replace(): Edge case for Christmas Eve/Sarajevo (12/24) - Trans-Siberian Orchestra due to limits with forward slashes in queries
+//Sixth .replace(): Edge case for Christmas Eve/Sarajevo, categorized as "Christmas Eve/Sarajevo (12/24)"
 //Seventh .replace(): Edge case for Captain Underpants Theme Song - "Weird Al" Yankovic, categorized simply as "Captain Underpants"
 //Eighth .replace(): Edge case for "Party In the CIA" - "Weird Al" Yankovic, categorized as "Party In the C.I.A."
 //Ninth .replace(): Edge case for "100s and Hope" - Xavier Wulf, categorized as "100s & Hope"
