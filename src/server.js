@@ -188,7 +188,7 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
         {
         
           let eSearchArtist = searchArtist[j].toLowerCase();
-
+          console.log("search artist", eSearchArtist);
         //return the object where the title and artist match the search term's. Redundant but readable
         //There might be some false positives using this methodology
           if((evaluateTitle === eSearchSong && evaluateArtist === eSearchArtist) || 

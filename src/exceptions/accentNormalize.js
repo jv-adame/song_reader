@@ -5,7 +5,8 @@
 module.exports =  function accent(name){
     let newName = name
         .replace(/[áà]/g, "a")
-        .replace(/[éè]/g, "e")
+        .replace(/[ćĉčċçḉ]/g, "c")
+        .replace(/[h̀]/g, "h")
         .replace(/[íì]/g, "i")
         .replace(/[ñ]/g, "n")
         .replace(/[óò]/g, "o")
