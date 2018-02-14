@@ -2,9 +2,12 @@ const axios = require("axios");
 const CircularJSON = require("circular-json");
 const cheerio = require("cheerio");
 const config = require("./config"),
-    watson = config.watson_api_key;
-    spotify = config.spotify_api_key;
-    genius = config.genius_api_key;
+    watsonUser = (config) ? config.watson_api_key.user : process.env.WATSON.USER;
+    watsonPass = (config) ? config.watson_api_key.pass : process.env.WATSON.PASS;
+    spotifyUser = (config) ? config.spotify_api_key.user : process.env.SPOTIFY.USER;
+    spotifyPass = (config) ? config.spotify_api_key.pass : process.env.SPOTIFY.PASS;
+    geniusToken = (config) ? config.genius_api_key.token : process.env.GENIUS.TOKEN;
+    
 const exceptions = require("./exceptions/exceptions");
 const accent = require("./exceptions/accentNormalize");
 const express = require('express'),
@@ -35,8 +38,8 @@ app.get("/search/:query", (req, res)=>{
       'Content-Type': 'application/x-www-form-urlencoded'
     },
     auth: {
-      username: spotify.user,
-      password: spotify.pass
+      username: spotifyUser,
+      password: spotifyPass
     }
   }).then((authorized)=>{
     //Receiving data to pass to app
@@ -80,8 +83,8 @@ app.get("/tempo/:id", (req, res)=>{
       'Content-Type': 'application/x-www-form-urlencoded'
     },
     auth: {
-      username: spotify.user,
-      password: spotify.pass
+      username: spotifyUser,
+      password: spotifyPass
     }
   }).then((authorized)=> {
     //Receiving data to pass to app
@@ -160,7 +163,7 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
         "Content-Type": "application/x-www-form-urlencoded",
       },
       headers: {
-        "Authorization": "Bearer " + genius.token
+        "Authorization": "Bearer " + geniusToken
       }
     })
     .then((response)=>{
@@ -247,7 +250,7 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
          
           console.log("lyrics:", lyrics);
           //Watson Lyric Analysis
-          axios.get("https://"+ watson.user +":"+ watson.pass +"@gateway.watsonplatform.net/tone-analyzer/api/v3/tone?version=2016-05-19&text=" + lyrics, {   
+          axios.get("https://"+ watsonUser +":"+ watsonPass +"@gateway.watsonplatform.net/tone-analyzer/api/v3/tone?version=2016-05-19&text=" + lyrics, {   
             header: "X-Watson-Learning-Opt-Out: true"      
           })
           .then((response)=> {
