@@ -250,7 +250,7 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
           //Second .replace(): Wipeout any character that is NOT listed within the square brackets
           //Third .replace(): Reduce any excess white space
         let lyrics = $(".lyrics").text()
-            .replace(/\[((?!Instrumental).)*\]$/gm, "")
+            .replace(/\[((?!Instrumental]).)*\]$/gm, "")
             .replace(/[^a-z A-Z 0-9 ; : \- & ~`',.]/g, " ")
             .replace(/\s/g, " ");
          
