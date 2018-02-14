@@ -45,7 +45,7 @@ class App extends Component {
   //Populate based on search query
   search(query){
 
-    axios.get("http://localhost:8080/search/" + query.replace("/", " "))
+    axios.get("/search/" + query.replace("/", " "))
     .then((result)=>{
       let queryResults = [];
       for (let i = 0; i < result.data.items.length; i++)
@@ -86,9 +86,9 @@ class App extends Component {
       //This may encompass more characters
       let songTitle = song.replace("?", "")
                           .replace("/", "_-_");
-      axios.get("http://localhost:8080/lyrics/" + songTitle + "/" + artist)
+      axios.get("/lyrics/" + songTitle + "/" + artist)
       .then((result)=>{
-        axios.get("http://localhost:8080/tempo/" + id)
+        axios.get("/tempo/" + id)
         .then((tempo)=>{
           let toneArray = [];
           for (let i = 0; i < result.data.length; i++)
