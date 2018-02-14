@@ -151,7 +151,7 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
       searchSong = exceptions(searchSong);    
   //Only remove ampersand sign for the sake of search query, this character messes with Spotify search results
   //A question mark (?) next to a forward slash (/) also causes a defunct query
-  let querySong = accent(searchSong).replace("&", "")
+  let querySong = accent(searchSong).replace("&", "and")
                           .replace("/", " ")
                           .replace("?", "");
 

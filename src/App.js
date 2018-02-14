@@ -49,7 +49,9 @@ class App extends Component {
   //Populate based on search query
   search(query){
 
-    axios.get("/search/" + query.replace("/", " "))
+    axios.get("/search/" + 
+      query.replace("/", " ")
+           .replace("&", "and"))
     .then((result)=>{
       let queryResults = [];
       for (let i = 0; i < result.data.items.length; i++)
