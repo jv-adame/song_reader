@@ -1,12 +1,6 @@
 const axios = require("axios");
 const CircularJSON = require("circular-json");
 const cheerio = require("cheerio");
-// const config = require("./config"),
-//     watsonUser = (config) ? config.watson_api_key.user : process.env.WATSON.USER;
-//     watsonPass = (config) ? config.watson_api_key.pass : process.env.WATSON.PASS;
-//     spotifyUser = (config) ? config.spotify_api_key.user : process.env.SPOTIFY.USER;
-//     spotifyPass = (config) ? config.spotify_api_key.pass : process.env.SPOTIFY.PASS;
-//     geniusToken = (config) ? config.genius_api_key.token : process.env.GENIUS.TOKEN;
 
 const watsonUser = process.env.WATSON_USER;
 const watsonPass = process.env.WATSON_PASS;
@@ -182,24 +176,19 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
         //query is substring of title
         //Spotify and Genius use different characters for apostraphes.  This remove any non standard characters for the sake of evaluation including all apostraphes
         let evaluateTitle = accent(searchResults[i].result.title.toLowerCase()).replace(/[^a-z A-Z 0-9 ; : \- & ~`,.()/]/g, " "); 
-        // let evaluateTitle  
         //Normalizes accented letters from evaluateArtist to match Spotify's artist naming convention
         let evaluateArtist = accent(searchResults[i].result.primary_artist.name.toLowerCase());
         let eSearchSong = accent(searchSong.toLowerCase()).replace(/[^a-z A-Z 0-9 ; : \- & ~`,.()/]/g, " ");
         
         let foundResult = searchResults[i].result;    
-        // console.log("search song:", eSearchSong);
-        // console.log("matching song:", evaluateTitle);
-        // console.log("matching artist:", evaluateArtist);
         
         //search for every artist in the array
         for (j = 0; j < searchArtist.length; j++)
         {
         
           let eSearchArtist = searchArtist[j].toLowerCase();
-          // console.log("search artist", eSearchArtist);
         //return the object where the title and artist match the search term's. Redundant but readable
-        //There might be some false positives using this methodology
+        //The final if statement is an edge case for "i" - Kendrick Lamar due to Spotify API limitations
           if((evaluateTitle === eSearchSong && evaluateArtist === eSearchArtist) || 
           (evaluateTitle.includes(eSearchSong) && evaluateArtist === eSearchArtist) || 
           (eSearchSong.includes(evaluateTitle) && evaluateArtist === eSearchArtist) || 
@@ -210,20 +199,7 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
             found = foundResult; 
           }
         }
-        
       } //end loop
-     // console.log("We found:", found); 
-
-      //Kendrick Lamar Logic bomb: why doesn't "i" === "i"?
-      // let logic = searchResults[0].result.title[1].toUpperCase() === searchSong.toUpperCase();
-      //Turns out it's the api's fault: Api side title was two characters (somehow?)
-      // let show = {
-      //   searched: searchSong,
-      //   first: searchResults[0].result.title,
-      //   logic: logic,
-      //   found: found 
-      // }
-      // console.log(show);
 
       //If specific artist/song combination cannot be found in genius.com give the following data
       if(!found || !found.url)
@@ -253,8 +229,7 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
             .replace(/\[((?!Instrumental]).)*\]$/gm, "")
             .replace(/[^a-z A-Z 0-9 ; : \- & ~`',.]/g, " ")
             .replace(/\s/g, " ");
-         
-          // console.log("lyrics:", lyrics);
+
           //Watson Lyric Analysis
           axios.get("https://"+ watsonUser +":"+ watsonPass +"@gateway.watsonplatform.net/tone-analyzer/api/v3/tone?version=2016-05-19&text=" + lyrics, {   
             header: "X-Watson-Learning-Opt-Out: true"      

@@ -14,10 +14,6 @@ import genius from "./images/genius.png";
 import exceptions from "./exceptions/exceptions";
 import circularJSON from "circular-json";
 import { lchmod } from 'fs';
-//toggle the following when pushing to Heroku
-// import config from "./config";
-
-
 
 //Default colors and percentages on startup
 const color = ["#DE0017", "#375E29", "#562786", "#FBD500", "#276DB4"];
@@ -61,8 +57,7 @@ class App extends Component {
         {
             artistList[j] = result.data.items[i].artists[j].name;
         }
-        // console.log("list of artists:", artistList);
-        //snippet artists: result.data.items[i].artists[0].name,
+
         let entry = {
           name: result.data.items[i].name,
           artists: artistList,
@@ -72,7 +67,6 @@ class App extends Component {
           uri: result.data.items[i].uri,
         }
         queryResults.push(entry);
-        // console.log("Entry #" + i + " " + entry.artists);
       }
       this.setState({
         searchResults: queryResults
@@ -88,7 +82,6 @@ class App extends Component {
       //Having a question mark at the end of the song title and next to the slash messes up the axios call.
       //Having slashes other than the ones already indicated in the localhost path break the query
       //Passing the "/" in as characters that the query can accept while turning it back into a slash server side for search purposes
-      //This may encompass more characters
       let songTitle = song.replace("?", "")
                           .replace("/", "_-_");
       axios.get("/lyrics/" + songTitle + "/" + artist)
