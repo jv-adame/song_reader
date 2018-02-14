@@ -60,7 +60,7 @@ class App extends Component {
         {
             artistList[j] = result.data.items[i].artists[j].name;
         }
-        console.log("list of artists:", artistList);
+        // console.log("list of artists:", artistList);
         //snippet artists: result.data.items[i].artists[0].name,
         let entry = {
           name: result.data.items[i].name,
@@ -71,7 +71,7 @@ class App extends Component {
           uri: result.data.items[i].uri,
         }
         queryResults.push(entry);
-        console.log("Entry #" + i + " " + entry.artists);
+        // console.log("Entry #" + i + " " + entry.artists);
       }
       this.setState({
         searchResults: queryResults

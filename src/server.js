@@ -188,16 +188,16 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
         let eSearchSong = accent(searchSong.toLowerCase()).replace(/[^a-z A-Z 0-9 ; : \- & ~`,.()/]/g, " ");
         
         let foundResult = searchResults[i].result;    
-        console.log("search song:", eSearchSong);
-        console.log("matching song:", evaluateTitle);
-        console.log("matching artist:", evaluateArtist);
+        // console.log("search song:", eSearchSong);
+        // console.log("matching song:", evaluateTitle);
+        // console.log("matching artist:", evaluateArtist);
         
         //search for every artist in the array
         for (j = 0; j < searchArtist.length; j++)
         {
         
           let eSearchArtist = searchArtist[j].toLowerCase();
-          console.log("search artist", eSearchArtist);
+          // console.log("search artist", eSearchArtist);
         //return the object where the title and artist match the search term's. Redundant but readable
         //There might be some false positives using this methodology
           if((evaluateTitle === eSearchSong && evaluateArtist === eSearchArtist) || 
@@ -254,7 +254,7 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
             .replace(/[^a-z A-Z 0-9 ; : \- & ~`',.]/g, " ")
             .replace(/\s/g, " ");
          
-          console.log("lyrics:", lyrics);
+          // console.log("lyrics:", lyrics);
           //Watson Lyric Analysis
           axios.get("https://"+ watsonUser +":"+ watsonPass +"@gateway.watsonplatform.net/tone-analyzer/api/v3/tone?version=2016-05-19&text=" + lyrics, {   
             header: "X-Watson-Learning-Opt-Out: true"      
