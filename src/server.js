@@ -1,12 +1,18 @@
 const axios = require("axios");
 const CircularJSON = require("circular-json");
 const cheerio = require("cheerio");
-const config = require("./config"),
-    watsonUser = (config) ? config.watson_api_key.user : process.env.WATSON.USER;
-    watsonPass = (config) ? config.watson_api_key.pass : process.env.WATSON.PASS;
-    spotifyUser = (config) ? config.spotify_api_key.user : process.env.SPOTIFY.USER;
-    spotifyPass = (config) ? config.spotify_api_key.pass : process.env.SPOTIFY.PASS;
-    geniusToken = (config) ? config.genius_api_key.token : process.env.GENIUS.TOKEN;
+// const config = require("./config"),
+//     watsonUser = (config) ? config.watson_api_key.user : process.env.WATSON.USER;
+//     watsonPass = (config) ? config.watson_api_key.pass : process.env.WATSON.PASS;
+//     spotifyUser = (config) ? config.spotify_api_key.user : process.env.SPOTIFY.USER;
+//     spotifyPass = (config) ? config.spotify_api_key.pass : process.env.SPOTIFY.PASS;
+//     geniusToken = (config) ? config.genius_api_key.token : process.env.GENIUS.TOKEN;
+
+const watsonUser = process.env.WATSON.USER;
+const watsonPass = process.env.WATSON.PASS;
+const spotifyUser = process.env.SPOTIFY.USER;
+const spotifyPass = process.env.SPOTIFY.PASS;
+const geniusToken = process.env.GENIUS.TOKEN;
     
 const exceptions = require("./exceptions/exceptions");
 const accent = require("./exceptions/accentNormalize");
