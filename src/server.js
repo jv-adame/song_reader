@@ -8,11 +8,11 @@ const cheerio = require("cheerio");
 //     spotifyPass = (config) ? config.spotify_api_key.pass : process.env.SPOTIFY.PASS;
 //     geniusToken = (config) ? config.genius_api_key.token : process.env.GENIUS.TOKEN;
 
-const watsonUser = process.env.WATSON.USER;
-const watsonPass = process.env.WATSON.PASS;
-const spotifyUser = process.env.SPOTIFY.USER;
-const spotifyPass = process.env.SPOTIFY.PASS;
-const geniusToken = process.env.GENIUS.TOKEN;
+const watsonUser = process.env.WATSON_USER;
+const watsonPass = process.env.WATSON_PASS;
+const spotifyUser = process.env.SPOTIFY_USER;
+const spotifyPass = process.env.SPOTIFY_PASS;
+const geniusToken = process.env.GENIUS_TOKEN;
     
 const exceptions = require("./exceptions/exceptions");
 const accent = require("./exceptions/accentNormalize");
