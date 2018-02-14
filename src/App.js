@@ -15,7 +15,7 @@ import exceptions from "./exceptions/exceptions";
 import circularJSON from "circular-json";
 import { lchmod } from 'fs';
 //toggle the following when pushing to Heroku
-import config from "./config";
+// import config from "./config";
 
 
 
