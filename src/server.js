@@ -2,13 +2,16 @@ const axios = require("axios");
 const CircularJSON = require("circular-json");
 const cheerio = require("cheerio");
 
-// const config = require("config.js");
+// const config = require("./config.js"),
+//       watson = config.watson_api_key;
+//       spotify = config.spotify_api_key;
+//       genius = config.genius_api_key;
 
-const watsonUser = process.env.WATSON_USER || config.waston_api_key.user;
-const watsonPass = process.env.WATSON_PASS || config.watson_api_key.pass;
-const spotifyUser = process.env.SPOTIFY_USER || config.spotify_api_key.user;
-const spotifyPass = process.env.SPOTIFY_PASS || config.spotify_api_key.pass;
-const geniusToken = process.env.GENIUS_TOKEN || config.genius_api_key.token;
+const watsonUser = process.env.WATSON_USER || watson.user;
+const watsonPass = process.env.WATSON_PASS || watson.pass;
+const spotifyUser = process.env.SPOTIFY_USER || spotify.user;
+const spotifyPass = process.env.SPOTIFY_PASS || spotify.pass;
+const geniusToken = process.env.GENIUS_TOKEN || genius.token;
     
 const exceptions = require("./exceptions/exceptions");
 const accent = require("./exceptions/accentNormalize");
@@ -145,6 +148,8 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
             
       //Exception Handler: Evaluates string in exceptions.js
       searchSong = exceptions(searchSong);    
+      //Local environment check
+      // console.log("This is the song I'm looking for:", searchSong);
   //Only remove ampersand sign for the sake of search query, this character messes with Spotify search results
   //A question mark (?) next to a forward slash (/) also causes a defunct query
   let querySong = accent(searchSong).replace("&", "and")
@@ -184,11 +189,19 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
         
         let foundResult = searchResults[i].result;    
         
+        //Local environment check
+        // console.log("Genius title is:", evaluateTitle);
+        // console.log("Genius artist is:", evaluateArtist);
+        
         //search for every artist in the array
         for (j = 0; j < searchArtist.length; j++)
         {
         
           let eSearchArtist = searchArtist[j].toLowerCase();
+
+          //Local environment check
+          // console.log("Spotify title is:", eSearchSong);
+          // console.log("Spotify artist is:", eSearchArtist);
         //return the object where the title and artist match the search term's. Redundant but readable
         //The final if statement is an edge case for "i" - Kendrick Lamar due to Spotify API limitations
           if((evaluateTitle === eSearchSong && evaluateArtist === eSearchArtist) || 
@@ -232,6 +245,9 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
             .replace(/[^a-z A-Z 0-9 ; : \- & ~`',.]/g, " ")
             .replace(/\s/g, " ");
 
+
+          //Local lyric check
+          // console.log("lyrics:", lyrics);
           //Watson Lyric Analysis
           axios.get("https://"+ watsonUser +":"+ watsonPass +"@gateway.watsonplatform.net/tone-analyzer/api/v3/tone?version=2016-05-19&text=" + lyrics, {   
             header: "X-Watson-Learning-Opt-Out: true"      
