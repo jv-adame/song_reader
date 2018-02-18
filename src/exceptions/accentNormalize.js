@@ -4,14 +4,14 @@
 //Will expand as needed, hopefully it does not need to be extensive
 module.exports =  function accent(name){
     let newName = name
-        .replace(/[áà]/g, "a")
+        .replace(/[áàÁÀ]/g, "a")
         .replace(/[ćĉčċçḉ]/g, "c")
-        .replace(/[éè]/g, "e")
+        .replace(/[éèÉÈ]/g, "e")
         .replace(/[h̀]/g, "h")
-        .replace(/[íì]/g, "i")
-        .replace(/[ñ]/g, "n")
-        .replace(/[óò]/g, "o")
-        .replace(/[úù]/g, "u");
+        .replace(/[íìÍÌ]/g, "i")
+        .replace(/[ñÑ]/g, "n")
+        .replace(/[óòÓÒ]/g, "o")
+        .replace(/[úùÚÙ]/g, "u");
 
     return newName;    
 }
