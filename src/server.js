@@ -2,11 +2,13 @@ const axios = require("axios");
 const CircularJSON = require("circular-json");
 const cheerio = require("cheerio");
 
-const watsonUser = process.env.WATSON_USER;
-const watsonPass = process.env.WATSON_PASS;
-const spotifyUser = process.env.SPOTIFY_USER;
-const spotifyPass = process.env.SPOTIFY_PASS;
-const geniusToken = process.env.GENIUS_TOKEN;
+// const config = require("config.js");
+
+const watsonUser = process.env.WATSON_USER || config.waston_api_key.user;
+const watsonPass = process.env.WATSON_PASS || config.watson_api_key.pass;
+const spotifyUser = process.env.SPOTIFY_USER || config.spotify_api_key.user;
+const spotifyPass = process.env.SPOTIFY_PASS || config.spotify_api_key.pass;
+const geniusToken = process.env.GENIUS_TOKEN || config.genius_api_key.token;
     
 const exceptions = require("./exceptions/exceptions");
 const accent = require("./exceptions/accentNormalize");
