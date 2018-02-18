@@ -11,7 +11,8 @@ import searchIcon from "./images/search_icon.png"
 import spotify from "./images/spotify.png";
 import watson from "./images/watson.png";
 import genius from "./images/genius.png";
-import exceptions from "./exceptions/exceptions";
+import exceptions from "./exceptions/exceptionsTitle";
+import exceptionsURL from "./exceptions/exceptionsUrl";
 import circularJSON from "circular-json";
 import { lchmod } from 'fs';
 

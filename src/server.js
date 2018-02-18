@@ -13,8 +13,9 @@ const spotifyUser = process.env.SPOTIFY_USER || spotify.user;
 const spotifyPass = process.env.SPOTIFY_PASS || spotify.pass;
 const geniusToken = process.env.GENIUS_TOKEN || genius.token;
     
-const exceptions = require("./exceptions/exceptions");
+const exceptions = require("./exceptions/exceptionsTitle");
 const accent = require("./exceptions/accentNormalize");
+const urlHandler = require("./exceptions/exceptionsUrl")
 const express = require('express'),
     app = express(),
     PORT = process.env.PORT || 8080;
@@ -190,9 +191,9 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
         let foundResult = searchResults[i].result;    
         
         //Local environment check
-        // console.log("Genius title is:", evaluateTitle);
-        // console.log("Genius artist is:", evaluateArtist);
-        
+        console.log("Genius title is:", evaluateTitle);
+        console.log("Genius artist is:", evaluateArtist);
+        console.log("Genius datapoint is:", searchResults[i].result);
         //search for every artist in the array
         for (j = 0; j < searchArtist.length; j++)
         {
@@ -200,8 +201,8 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
           let eSearchArtist = searchArtist[j].toLowerCase();
 
           //Local environment check
-          // console.log("Spotify title is:", eSearchSong);
-          // console.log("Spotify artist is:", eSearchArtist);
+          console.log("Spotify title is:", eSearchSong);
+          console.log("Spotify artist is:", eSearchArtist);
         //return the object where the title and artist match the search term's. Redundant but readable
         //The final if statement is an edge case for "i" - Kendrick Lamar due to Spotify API limitations
           if((evaluateTitle === eSearchSong && evaluateArtist === eSearchArtist) || 
@@ -213,6 +214,13 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
           {
             found = foundResult; 
           }
+
+          let manual = urlHandler(eSearchSong, eSearchArtist);
+          if (manual)
+          {
+            found.url = manual;
+          }
+        
         }
       } //end loop
 
@@ -247,7 +255,7 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
 
 
           //Local lyric check
-          // console.log("lyrics:", lyrics);
+          console.log("lyrics:", lyrics);
           //Watson Lyric Analysis
           axios.get("https://"+ watsonUser +":"+ watsonPass +"@gateway.watsonplatform.net/tone-analyzer/api/v3/tone?version=2016-05-19&text=" + lyrics, {   
             header: "X-Watson-Learning-Opt-Out: true"      

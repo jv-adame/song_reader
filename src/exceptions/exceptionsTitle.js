@@ -21,6 +21,7 @@ module.exports =  function refine(title){
         .replace("Captain Underpants Theme Song", "Captain Underpants")
         .replace("Party In the CIA", "Party in the C.I.A.")
         .replace("100s and Hope", "100s & Hope")
+        .replace("bboom bboom", )
         .replace("3005", "v. 3005");
         
     return newCredit;    
