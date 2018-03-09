@@ -1,3 +1,7 @@
+html{
+  font-size: 16px;
+}
+
 body{
   background-color: #424242;
 }
@@ -17,12 +21,29 @@ body{
   flex-direction: row;
   justify-content: space-around;
 }
+.headerContainer{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.flexClass{
+  display: flex;
+  flex-direction: column;
+  width: 80vw;
+  justify-content: space-between;
+}
 
 .header{
+  display: flex;
   justify-content: space-between;
   background-color: #0F0F0F;
   color: white;
   height: 15vh;
+  flex-direction: column;
+}
+.responsive{
+  display: none;
 }
 .readContainer{
   width: 45%;
@@ -44,17 +65,6 @@ body{
   text-align: left;
 }
 
-.iconContainer{
-  width: 50px;
-}
-
-.iconContainer img{
-  max-width: 100%;
-}
-.iconTray{
-  width: 25vw;
-  
-}
 .iconTray div{
   margin: auto 0;
 }
@@ -64,6 +74,12 @@ body{
 
 .imgClick{
   cursor: pointer;
+}
+.iconTray{
+  width: 30vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }
 
 /*CSS Animation*/
@@ -113,7 +129,6 @@ body{
 
 /*Search Results*/
 .searchContainer{
-  /* background-color: #424242; */
   margin: auto 0;
   position: relative;
 }
@@ -126,9 +141,6 @@ body{
   border-bottom-right-radius: 5px;
   height: 11vh;
   width: 20vw;
-  position: absolute;
-  top: -6vh;
-  left: 0vw;
 }
 
 input{
@@ -139,20 +151,16 @@ input{
 .searchForm{
   padding-bottom: 1vh;
   text-align: left;
-  
 }
 .searchForm h6{
   position: absolute;
-  top: -8vh;
-  left: 5vw;
-  z-index: 10;
+  top: -3vh;
+  right: 2vw;
 }
 .searchImg{
   position: absolute;
-  z-index: 10;
-  top: -3vh;
-  left: 0vw;
 }
+
 .nowPlaying{
   color: white;
   margin: auto 0;
@@ -161,7 +169,78 @@ input{
   color: white;
 }
 iframe{
-  /* border: none; */
   border-radius: 5px;
 }
 
+/*Responsive Design*/
+
+/*Tablet Responsive Size*/
+@media (max-width: 768px){
+  .default{
+    display: none;
+  }
+  .responsive{
+    display: flex;
+  }
+  h2{
+    font-size: 1.25rem;
+  }
+  .searchForm h6 {
+    display: none;
+  }
+  input{
+    font: 400 1.25rem Arial;
+    text-indent: 10vw;
+  }
+  .readContainer{
+    width: 100%;
+  }
+  .musicBox{
+    width: 75%;
+  }
+  .searchBar{
+    width: 50vw;
+  }
+
+  .header{
+    flex-direction: column;
+    height: 25vh;
+  } 	
+}
+
+/*Phone
+ Responsive Size*/
+@media (max-width: 480px){
+
+  h2{
+    font-size: 1rem;
+  }
+  .header{
+    height: 20vh;
+  }
+  .searchForm h6 {
+    display: none;
+  }
+
+  .searchBar{
+    width: 50vw;
+  }
+
+  input{
+    font: 400 1.25rem Arial;
+    text-indent: 10vw;
+  }
+  .flexClass{
+    width: 100vw;
+  }
+  .iconTray{
+    display: none;
+  }
+  .musicBox{
+    width: 75%;
+  }
+  .readContainer{
+    width: 100%;
+  } 
+
+}

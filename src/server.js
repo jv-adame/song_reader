@@ -2,6 +2,7 @@ const axios = require("axios");
 const CircularJSON = require("circular-json");
 const cheerio = require("cheerio");
 
+//Toggle for local and Heroku hosting
 // const config = require("./config.js"),
 //       watson = config.watson_api_key;
 //       spotify = config.spotify_api_key;
@@ -191,9 +192,9 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
         let foundResult = searchResults[i].result;    
         
         //Local environment check
-        console.log("Genius title is:", evaluateTitle);
-        console.log("Genius artist is:", evaluateArtist);
-        console.log("Genius datapoint is:", searchResults[i].result);
+        // console.log("Genius title is:", evaluateTitle);
+        // console.log("Genius artist is:", evaluateArtist);
+        // console.log("Genius datapoint is:", searchResults[i].result);
         //search for every artist in the array
         for (j = 0; j < searchArtist.length; j++)
         {
@@ -201,8 +202,8 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
           let eSearchArtist = searchArtist[j].toLowerCase();
 
           //Local environment check
-          console.log("Spotify title is:", eSearchSong);
-          console.log("Spotify artist is:", eSearchArtist);
+          // console.log("Spotify title is:", eSearchSong);
+          // console.log("Spotify artist is:", eSearchArtist);
         //return the object where the title and artist match the search term's. Redundant but readable
         //The final if statement is an edge case for "i" - Kendrick Lamar due to Spotify API limitations
           if((evaluateTitle === eSearchSong && evaluateArtist === eSearchArtist) || 
@@ -215,6 +216,7 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
             found = foundResult; 
           }
 
+          //If Genius.com search is unable to find the exact song, give Watson API the correct URL manually
           let manual = urlHandler(eSearchSong, eSearchArtist);
           if (manual)
           {
@@ -248,6 +250,7 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
           //First .replace(): Wipeout all square brackets and characters between square brackets that is not the phrase "Instrumental"
           //Second .replace(): Wipeout any character that is NOT listed within the square brackets
           //Third .replace(): Reduce any excess white space
+          //            .replace(/\\'/gm, "'")
         let lyrics = $(".lyrics").text()
             .replace(/\[((?!Instrumental]).)*\]$/gm, "")
             .replace(/[^a-z A-Z 0-9 ; : \- & ~`',.]/g, " ")

@@ -230,19 +230,37 @@ class App extends Component {
   render() {
       let playingSong = this.state.song;
       let playingArtist = this.state.artist;
+
+      //default or responsive will become visible depending on the device screen width
     return (
       <div className="App">
-          <div className="header flexContainer">
-         <SearchBar search={this.search} />
-         <NowPlaying song={this.state.song} artist={this.state.artist}/>
-          <div className="flexContainer iconTray">
-            <div>Powered By:</div>
-            <div className="iconContainer"><a href="https://developer.spotify.com/web-api/" target="_blank"><img className="iconImg" src={spotify} alt="Spotify"/></a></div>
-            <div className="iconContainer"><a href="https://www.ibm.com/watson/services/tone-analyzer/" target="_blank"><img className="iconImg" src={watson} alt="Watson"/></a></div>
-            <div className="iconContainer"><a href="https://genius.com/developers" target="_blank"><img className="iconImg" src={genius} alt="Genius"/></a></div>
+      
+        <div className="header flexContainer default">
+          <div className="headerContainer">
+            <SearchBar search={this.search} /> 
+            <NowPlaying song={this.state.song} artist={this.state.artist}/>
+            <div className="iconTray">
+              <div>Powered By:</div>
+              <div className="iconContainer"><a href="https://developer.spotify.com/web-api/" target="_blank"><img className="iconImg" src={spotify} alt="Spotify"/></a></div>
+              <div className="iconContainer"><a href="https://www.ibm.com/watson/services/tone-analyzer/" target="_blank"><img className="iconImg" src={watson} alt="Watson"/></a></div>
+              <div className="iconContainer"><a href="https://genius.com/developers" target="_blank"><img className="iconImg" src={genius} alt="Genius"/></a></div>
+            </div>
           </div>
-         </div>
-         <div className="wrapper">
+          
+        </div>
+        <div className="header flexContainer responsive">
+          <div className="headerContainer">
+            <SearchBar search={this.search} /> 
+            <div className="iconTray">
+              <div>Powered By:</div>
+              <div className="iconContainer"><a href="https://developer.spotify.com/web-api/" target="_blank"><img className="iconImg" src={spotify} alt="Spotify"/></a></div>
+              <div className="iconContainer"><a href="https://www.ibm.com/watson/services/tone-analyzer/" target="_blank"><img className="iconImg" src={watson} alt="Watson"/></a></div>
+              <div className="iconContainer"><a href="https://genius.com/developers" target="_blank"><img className="iconImg" src={genius} alt="Genius"/></a></div>
+            </div>
+          </div>
+          <NowPlaying song={this.state.song} artist={this.state.artist}/>
+        </div>
+         <div className="wrapper flexClass">
             <Animation color={this.state.color} percentage={this.state.percentage} tempo={this.state.tempo} energy={this.state.energy}/>
             <EmotionReader emotion={this.state.emotion} moving={this.state.moving} percentage={this.state.percentage} tempo={this.state.tempo} energy={this.state.energy} song={this.state.song} song={this.state.song} artist={this.state.artist}/>       
             <SearchList setTone={this.setTone} onPause={this.onPause} searchResults={this.state.searchResults} inputTone={this.inputTone}/>
