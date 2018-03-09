@@ -3,10 +3,10 @@ const CircularJSON = require("circular-json");
 const cheerio = require("cheerio");
 
 //Toggle for local and Heroku hosting
-const config = require("./config.js"),
-      watson = config.watson_api_key;
-      spotify = config.spotify_api_key;
-      genius = config.genius_api_key;
+// const config = require("./config.js"),
+//       watson = config.watson_api_key;
+//       spotify = config.spotify_api_key;
+//       genius = config.genius_api_key;
 
 const watsonUser = process.env.WATSON_USER || watson.user;
 const watsonPass = process.env.WATSON_PASS || watson.pass;
