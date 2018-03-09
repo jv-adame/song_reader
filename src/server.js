@@ -152,7 +152,7 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
       //Exception Handler: Evaluates string in exceptions.js
       searchSong = exceptions(searchSong);    
       //Local environment check
-      // console.log("This is the song I'm looking for:", searchSong);
+      //console.log("This is the song I'm looking for:", searchSong);
   //Only remove ampersand sign for the sake of search query, this character messes with Spotify search results
   //A question mark (?) next to a forward slash (/) also causes a defunct query
   let querySong = accent(searchSong).replace("&", "and")
@@ -176,8 +176,8 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
         "Authorization": "Bearer " + geniusToken
       }
     })
-    .then((response)=>{
-      let searchResults = response.data.response.hits;
+    .then((queryResponse)=>{
+      let searchResults = queryResponse.data.response.hits;
       let found;
 
       //change loop below to break once result is found
@@ -193,8 +193,8 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
         let foundResult = searchResults[i].result;    
         
         //Local environment check
-        // console.log("Genius title is:", evaluateTitle);
-        // console.log("Genius artist is:", evaluateArtist);
+        console.log("Genius title is:", evaluateTitle);
+        console.log("Genius artist is:", evaluateArtist);
         // console.log("Genius datapoint is:", searchResults[i].result);
         //search for every artist in the array
         for (j = 0; j < searchArtist.length; j++)
@@ -237,8 +237,9 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
           {score: 0.66},
           {score: 0.66}
         ]
-
+        //toggle back
         res.send(placeholder);
+       // res.send(queryResponse.data.response);
       }
       //otherwise commence analysis
       else
@@ -259,7 +260,7 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
 
 
           //Local lyric check
-          // console.log("lyrics:", lyrics);
+          //console.log("lyrics:", lyrics);
           //Watson Lyric Analysis
           axios.get("https://"+ watsonUser +":"+ watsonPass +"@gateway.watsonplatform.net/tone-analyzer/api/v3/tone?version=2016-05-19&text=" + lyrics, {   
             header: "X-Watson-Learning-Opt-Out: true"      
