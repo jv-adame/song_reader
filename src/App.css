@@ -228,10 +228,10 @@ iframe{
 
   input{
     font: 400 1.25rem Arial;
-    text-indent: 10vw;
+    text-indent: 13vw;
   }
   .flexClass{
-    width: 100vw;
+    /* width: 100vw; */
   }
   .iconTray{
     display: none;

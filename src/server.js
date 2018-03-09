@@ -3,10 +3,10 @@ const CircularJSON = require("circular-json");
 const cheerio = require("cheerio");
 
 //Toggle for local and Heroku hosting
-// const config = require("./config.js"),
-//       watson = config.watson_api_key;
-//       spotify = config.spotify_api_key;
-//       genius = config.genius_api_key;
+const config = require("./config.js"),
+      watson = config.watson_api_key;
+      spotify = config.spotify_api_key;
+      genius = config.genius_api_key;
 
 const watsonUser = process.env.WATSON_USER || watson.user;
 const watsonPass = process.env.WATSON_PASS || watson.pass;
@@ -258,7 +258,7 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
 
 
           //Local lyric check
-          console.log("lyrics:", lyrics);
+          // console.log("lyrics:", lyrics);
           //Watson Lyric Analysis
           axios.get("https://"+ watsonUser +":"+ watsonPass +"@gateway.watsonplatform.net/tone-analyzer/api/v3/tone?version=2016-05-19&text=" + lyrics, {   
             header: "X-Watson-Learning-Opt-Out: true"      
