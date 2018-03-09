@@ -193,8 +193,8 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
         let foundResult = searchResults[i].result;    
         
         //Local environment check
-        console.log("Genius title is:", evaluateTitle);
-        console.log("Genius artist is:", evaluateArtist);
+        // console.log("Genius title is:", evaluateTitle);
+        // console.log("Genius artist is:", evaluateArtist);
         // console.log("Genius datapoint is:", searchResults[i].result);
         //search for every artist in the array
         for (j = 0; j < searchArtist.length; j++)
