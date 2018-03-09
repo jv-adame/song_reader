@@ -137,15 +137,16 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
   //Seventh .replace(): removes all titles with (Parody of <song name>) in title.  Weird Al clause
   //Eighth .replace(): removes any songs titled as (Acoustic <anything>) from song title
   //Ninth .replace(): Trims any excess (more than one) space
-  let searchSong = req.params.song          
+  let searchSong = req.params.song
+                    .toLowerCase()          
                     .replace("’", "'")
                     .replace("_-_", "/")
                     .replace(/\(with.*\)/g, "")
                     .replace(/\(feat.*\)/g, "")
                     .replace(/ - .*/g, "")
                     .replace(/\[.*\]/g, "")
-                    .replace(/ \(Parody.*\)/g, "")
-                    .replace(/\(Acoustic.*\)/g, "")
+                    .replace(/ \(parody.*\)/g, "")
+                    .replace(/\(acoustic.*\)/g, "")
                     .replace(/ * {2,} /g, "");
             
       //Exception Handler: Evaluates string in exceptions.js
