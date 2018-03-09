@@ -230,9 +230,7 @@ iframe{
     font: 400 1.25rem Arial;
     text-indent: 13vw;
   }
-  .flexClass{
-    /* width: 100vw; */
-  }
+
   .iconTray{
     display: none;
   }
@@ -242,5 +240,7 @@ iframe{
   .readContainer{
     width: 100%;
   } 
-
+  .searchBar{
+    width: 95vw;
+  }
 }
