@@ -5,7 +5,7 @@ import cancel from "./images/cancel.png";
 class About extends Component{
     render(){
         return(
-            <div>
+            <div className="about">
                 <div className="iconContainer aboutContainer"><Link className="link" to="/"><img className="iconImg" src={cancel} alt="Exit"/></Link></div>
             <h2>Stuff</h2>
             <p>

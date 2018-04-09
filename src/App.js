@@ -237,10 +237,9 @@ class App extends Component {
       <div className="App">
         <div className="header flexContainer default">
           <div className="aboutContainer">
-          <Link className="link" to="/about">About</Link>
+            {/* <Link className="link" to="/about">About</Link> */}
           </div>
           <div className="headerContainer">
-          
             <SearchBar search={this.search} /> 
             <NowPlaying song={this.state.song} artist={this.state.artist}/>
             <div className="iconTray">
@@ -253,9 +252,11 @@ class App extends Component {
           
         </div>
         <div className="header flexContainer responsive">
+          <div className="aboutContainer">
+            <Link className="link" to="/about">About</Link>
+          </div>
           <div className="headerContainer">
             <SearchBar search={this.search} /> 
-            <Link className="link" to="/about">About</Link>
             <div className="iconTray">
               <div>Powered By:</div>
               <div className="iconContainer"><a href="https://developer.spotify.com/web-api/" target="_blank"><img className="iconImg" src={spotify} alt="Spotify"/></a></div>

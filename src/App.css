@@ -130,7 +130,10 @@ body{
   color: #F6ED60;
 }
 
-
+/*About*/
+.about{
+  color: white;
+}
 /*Search Results*/
 .searchContainer{
   margin: auto 0;
