@@ -4,6 +4,7 @@ import './App.css';
 import axios from "axios";
 import Animation from "./components/animation";
 import EmotionReader from "./components/emotionReader";
+import {Link} from "react-router-dom";
 import SearchList from "./components/searchList";
 import SearchBar from "./components/searchBar";
 import NowPlaying from "./components/nowPlaying";
@@ -234,7 +235,7 @@ class App extends Component {
       //default or responsive will become visible depending on the device screen width
     return (
       <div className="App">
-      
+        <Link to="/about">Hi there</Link>
         <div className="header flexContainer default">
           <div className="headerContainer">
             <SearchBar search={this.search} /> 
