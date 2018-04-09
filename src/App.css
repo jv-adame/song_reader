@@ -26,7 +26,10 @@ body{
   flex-direction: row;
   justify-content: space-between;
 }
-
+.aboutContainer{
+  display: flex;
+  flex-direction: row-reverse;
+}
 .flexClass{
   display: flex;
   flex-direction: column;
@@ -39,7 +42,7 @@ body{
   justify-content: space-between;
   background-color: #0F0F0F;
   color: white;
-  height: 15vh;
+  height: 17vh;
   flex-direction: column;
 }
 .responsive{
@@ -126,6 +129,7 @@ body{
 .Energy{
   color: #F6ED60;
 }
+
 
 /*Search Results*/
 .searchContainer{

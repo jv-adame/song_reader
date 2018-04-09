@@ -8,7 +8,7 @@ import {Link} from "react-router-dom";
 import SearchList from "./components/searchList";
 import SearchBar from "./components/searchBar";
 import NowPlaying from "./components/nowPlaying";
-import searchIcon from "./images/search_icon.png"
+import searchIcon from "./images/search_icon.png";
 import spotify from "./images/spotify.png";
 import watson from "./images/watson.png";
 import genius from "./images/genius.png";
@@ -235,9 +235,12 @@ class App extends Component {
       //default or responsive will become visible depending on the device screen width
     return (
       <div className="App">
-        <Link to="/about">Hi there</Link>
         <div className="header flexContainer default">
+          <div className="aboutContainer">
+          <Link className="link" to="/about">About</Link>
+          </div>
           <div className="headerContainer">
+          
             <SearchBar search={this.search} /> 
             <NowPlaying song={this.state.song} artist={this.state.artist}/>
             <div className="iconTray">
@@ -252,6 +255,7 @@ class App extends Component {
         <div className="header flexContainer responsive">
           <div className="headerContainer">
             <SearchBar search={this.search} /> 
+            <Link className="link" to="/about">About</Link>
             <div className="iconTray">
               <div>Powered By:</div>
               <div className="iconContainer"><a href="https://developer.spotify.com/web-api/" target="_blank"><img className="iconImg" src={spotify} alt="Spotify"/></a></div>

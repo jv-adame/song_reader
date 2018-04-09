@@ -8,3 +8,9 @@ body {
   width: 20%;
   margin: 0 auto;
 }
+
+.link{
+  text-decoration: none;
+  color: white;
+  font-size: 1.25rem;
+}
