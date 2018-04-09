@@ -7,7 +7,7 @@ class EmotionReader extends Component{
             let playingArtist = this.props.artist[0];
             let p = Array.from(this.props.percentage);
             let instrumental = (((p[0] === p[1]) && (p[0] === p[2])) && p[0] === 33) ? "is an instrumental" : "" ;
-            let cantFind = (((p[0] === p[1]) && (p[0] === p[2])) && p[0] === 66) ? "cannot be found" : "";
+            let cantFind = (((p[0] === p[1]) && (p[0] === p[2])) && p[0] === 66) ? "cannot be found on Genius.com" : "";
         //error message end
         let energy = Math.ceil(this.props.energy * 100);
         let tempo = Math.ceil(this.props.tempo);
