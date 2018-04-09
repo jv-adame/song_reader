@@ -10,6 +10,7 @@
 //Eighth .replace(): Edge case for "Party In the CIA" - "Weird Al" Yankovic, categorized as "Party In the C.I.A."
 //Ninth .replace(): Edge case for "100s and Hope" - Xavier Wulf, categorized as "100s & Hope"
 //Tenth .replace(): Edge case for "3005" - Childish Gambino, categorized as "V. 3005"
+//Eleventh .replace(): Edge case for "Love. feat. Zacari" - Kendrick Lamar, categorized as "love"
 module.exports =  function refine(title){
     let newCredit = title
         .replace(/\(So.*\)/g, "")
