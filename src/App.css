@@ -16,6 +16,9 @@ body{
   margin: 0 auto;
 }
 
+p{
+  line-height: 1.5;
+}
 .flexContainer{
   display: flex;
   flex-direction: row;
@@ -25,10 +28,14 @@ body{
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  width: 80vw;
+  margin: 0 auto;
 }
 .aboutContainer{
   display: flex;
   flex-direction: row-reverse;
+  width: 80vw;
+  margin: 0 auto;
 }
 .flexClass{
   display: flex;

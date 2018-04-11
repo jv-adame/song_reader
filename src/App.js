@@ -237,7 +237,7 @@ class App extends Component {
       <div className="App">
         <div className="header flexContainer default">
           <div className="aboutContainer">
-            {/* <Link className="link" to="/about">About</Link> */}
+            <Link className="link" to="/about">About</Link>
           </div>
           <div className="headerContainer">
             <SearchBar search={this.search} /> 
