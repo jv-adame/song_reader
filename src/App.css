@@ -33,14 +33,20 @@ p{
 }
 .aboutContainer{
   display: flex;
-  flex-direction: row-reverse;
+  flex-direction: row;
   width: 80vw;
   margin: 0 auto;
+  justify-content: flex-end;
+}
+.aboutSpacer{
+  display: flex;
+  justify-content: space-between;
+  width: 120px;
 }
 .flexClass{
   display: flex;
   flex-direction: column;
-  width: 80vw;
+  width: 100vw;
   justify-content: space-between;
 }
 
@@ -213,7 +219,7 @@ iframe{
     width: 75%;
   }
   .searchBar{
-    width: 50vw;
+    width: 40vw;
   }
 
   .header{

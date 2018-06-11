@@ -13,8 +13,10 @@ class About extends Component{
 
         <div className="header flexContainer default">
           <div className="aboutContainer">
-
-            <Link className="link" to="/about">About</Link>
+            <div className="aboutSpacer">
+                <Link className="link" to="/">Home</Link>
+                <Link className="link" to="/about">About</Link>
+            </div>
           </div>
           <div className="headerContainer">
           <h2>About the App</h2>
@@ -29,8 +31,10 @@ class About extends Component{
         </div>
         <div className="header flexContainer responsive">
           <div className="aboutContainer">
-            <Link className="link" to="/">Home</Link>
-            <Link className="link" to="/about">About</Link>
+            <div className="aboutSpacer">
+                <Link className="link" to="/">Home</Link>
+                <Link className="link" to="/about">About</Link>
+            </div>
           </div>
           <div className="headerContainer">
           <h2>About the App</h2>
@@ -43,7 +47,7 @@ class About extends Component{
           </div>
         </div>
          <div className="wrapper flexClass">
-         <div className="iconContainer aboutContainer"><Link className="link" to="/"><img className="iconImg" src={cancel} alt="Exit"/></Link></div>
+         <div className="iconContainer aboutContainer"></div>
          <p>The search function uses the Spotify API to search for tracks.  
            Searching here will function exactly the same as searching "Songs" 
            with the Spotify application.  Pressing the Watson API logo next 
