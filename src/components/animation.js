@@ -3,21 +3,20 @@ import React, {Component} from 'react';
 
 class Animation extends Component{
     render(){
-        let copy = Array.from(this.props.color);
-        let p = Array.from(this.props.percentage);
+        let { color, percentage } = this.props;
     
         //offset distribution
         let off = ["0", "0", "0", "0", "0"];
         let sum = 0;
 
-        for (let i = 0; i < copy.length; i++)
+        for (let i = 0; i < color.length; i++)
         {
-            sum += p[i];
+            sum += percentage[i];
         }
          //assign percentage to colors
         let initial = 0;
         let k;
-        for (let j = 0; j < copy.length; j++)
+        for (let j = 0; j < color.length; j++)
         {
           //Print and calculate the colours in chromatic order
           if(j===0)
@@ -41,7 +40,7 @@ class Animation extends Component{
             k = 2;
           }
 
-            initial += p[k];
+            initial += percentage[k];
             let percent = (initial/sum) * 100;
             let string = percent + "%";
             off[k] = string;
@@ -57,11 +56,11 @@ class Animation extends Component{
               <svg className="spin" width="400" height="400" fill="none" stroke="url(#grad1)">
                 <defs>
                   <radialGradient id="grad1" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
-                      <stop offset={off[0]}style={{"stopColor": copy[0], "stopOpacity": 1}} />
-                      <stop offset={off[3]} style={{"stopColor": copy[3],"stopOpacity":1}} />
-                      <stop offset={off[1]} style={{"stopColor": copy[1],"stopOpacity":1}} />
-                      <stop offset={off[4]} style={{"stopColor": copy[4], "stopOpacity": 1}} />
-                      <stop offset={off[2]} style={{"stopColor": copy[2], "stopOpacity": 1}} />
+                      <stop offset={off[0]}style={{"stopColor": color[0], "stopOpacity": 1}} />
+                      <stop offset={off[3]} style={{"stopColor": color[3],"stopOpacity":1}} />
+                      <stop offset={off[1]} style={{"stopColor": color[1],"stopOpacity":1}} />
+                      <stop offset={off[4]} style={{"stopColor": color[4], "stopOpacity": 1}} />
+                      <stop offset={off[2]} style={{"stopColor": color[2], "stopOpacity": 1}} />
                   </radialGradient>
                 </defs>
                 <filter id="blur-filter" x="-2" y="-2" width="200" height="200">
