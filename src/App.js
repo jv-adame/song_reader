@@ -12,6 +12,7 @@ import searchIcon from "./images/search_icon.png";
 import spotify from "./images/spotify.png";
 import watson from "./images/watson.png";
 import genius from "./images/genius.png";
+import github from "./images/git_hub.png";
 import exceptions from "./exceptions/exceptionsTitle";
 import exceptionsURL from "./exceptions/exceptionsUrl";
 import circularJSON from "circular-json";
@@ -250,6 +251,7 @@ class App extends Component {
               <div className="iconContainer"><a href="https://developer.spotify.com/web-api/" target="_blank"><img className="iconImg" src={spotify} alt="Spotify"/></a></div>
               <div className="iconContainer"><a href="https://www.ibm.com/watson/services/tone-analyzer/" target="_blank"><img className="iconImg" src={watson} alt="Watson"/></a></div>
               <div className="iconContainer"><a href="https://genius.com/developers" target="_blank"><img className="iconImg" src={genius} alt="Genius"/></a></div>
+              <div className="iconContainer"><a href="https://github.com/jv-adame/song_reader" target="_blank"><img className="iconImg" src={github} alt="Github"/></a></div>
             </div>
           </div>
           
@@ -268,6 +270,7 @@ class App extends Component {
               <div className="iconContainer"><a href="https://developer.spotify.com/web-api/" target="_blank"><img className="iconImg" src={spotify} alt="Spotify"/></a></div>
               <div className="iconContainer"><a href="https://www.ibm.com/watson/services/tone-analyzer/" target="_blank"><img className="iconImg" src={watson} alt="Watson"/></a></div>
               <div className="iconContainer"><a href="https://genius.com/developers" target="_blank"><img className="iconImg" src={genius} alt="Genius"/></a></div>
+              <div className="iconContainer"><a href="https://github.com/jv-adame/song_reader" target="_blank"><img className="iconImg" src={github} alt="Github"/></a></div>
             </div>
           </div>
           <NowPlaying song={this.state.song} artist={this.state.artist}/>

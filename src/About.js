@@ -4,12 +4,13 @@ import cancel from "./images/cancel.png";
 import spotify from "./images/spotify.png";
 import watson from "./images/watson.png";
 import genius from "./images/genius.png";
+import github from "./images/git_hub.png";
 
 class About extends Component{
     render(){
         return(
             <div className="about">
-
+          
 
         <div className="header aboutHeader flexContainer default">
           <div className="aboutContainer">
@@ -25,6 +26,7 @@ class About extends Component{
               <div className="iconContainer"><a href="https://developer.spotify.com/web-api/" target="_blank"><img className="iconImg" src={spotify} alt="Spotify"/></a></div>
               <div className="iconContainer"><a href="https://www.ibm.com/watson/services/tone-analyzer/" target="_blank"><img className="iconImg" src={watson} alt="Watson"/></a></div>
               <div className="iconContainer"><a href="https://genius.com/developers" target="_blank"><img className="iconImg" src={genius} alt="Genius"/></a></div>
+              <div className="iconContainer"><a href="https://github.com/jv-adame/song_reader" target="_blank"><img className="iconImg" src={github} alt="Github"/></a></div>
             </div>
           </div>
           
@@ -43,6 +45,7 @@ class About extends Component{
               <div className="iconContainer"><a href="https://developer.spotify.com/web-api/" target="_blank"><img className="iconImg" src={spotify} alt="Spotify"/></a></div>
               <div className="iconContainer"><a href="https://www.ibm.com/watson/services/tone-analyzer/" target="_blank"><img className="iconImg" src={watson} alt="Watson"/></a></div>
               <div className="iconContainer"><a href="https://genius.com/developers" target="_blank"><img className="iconImg" src={genius} alt="Genius"/></a></div>
+              <div className="iconContainer"><a href="https://github.com/jv-adame/song_reader" target="_blank"><img className="iconImg" src={github} alt="Github"/></a></div>
             </div>
           </div>
         </div>
