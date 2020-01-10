@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import axios from "axios";
+
 import Animation from "./components/animation";
 import EmotionReader from "./components/emotionReader";
 import {Link} from "react-router-dom";
@@ -17,6 +18,9 @@ import exceptions from "./exceptions/exceptionsTitle";
 import exceptionsURL from "./exceptions/exceptionsUrl";
 import circularJSON from "circular-json";
 import { lchmod } from 'fs';
+import ToneAnalyzerV3 from 'ibm-watson/tone-analyzer/v3';
+import { IamAuthenticator} from 'ibm-watson/auth';
+
 
 //Default colors and percentages on startup
 const color = ["#DE0017", "#375E29", "#562786", "#FBD500", "#276DB4"];
@@ -74,6 +78,7 @@ class App extends Component {
       this.setState({
         searchResults: queryResults
       });      
+
     })
     .catch((error)=>{
       console.log(error);

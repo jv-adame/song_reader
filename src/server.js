@@ -8,8 +8,7 @@ const cheerio = require("cheerio");
 //       spotify = config.spotify_api_key;
 //       genius = config.genius_api_key;
 
-const watsonUser = process.env.WATSON_USER || watson.user;
-const watsonPass = process.env.WATSON_PASS || watson.pass;
+const watsonKey = process.env.WATSON_KEY || watson.key;
 const spotifyUser = process.env.SPOTIFY_USER || spotify.user;
 const spotifyPass = process.env.SPOTIFY_PASS || spotify.pass;
 const geniusToken = process.env.GENIUS_TOKEN || genius.token;
@@ -20,6 +19,14 @@ const urlHandler = require("./exceptions/exceptionsUrl")
 const express = require('express'),
     app = express(),
     PORT = process.env.PORT || 8080;
+
+const ToneAnalyzerV3 = require('ibm-watson/tone-analyzer/v3');
+const { IamAuthenticator } = require('ibm-watson/auth');
+const toneAnalyzer = new ToneAnalyzerV3({
+      authenticator: new IamAuthenticator({ apikey: watsonKey}),
+      version: '2016-05-19',
+      url: 'https://gateway.watsonplatform.net/tone-analyzer/api/'
+});
 
 app.use(express.static(__dirname+"/build"))
 
@@ -262,9 +269,12 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
           //Local lyric check
           //console.log("lyrics:", lyrics);
           //Watson Lyric Analysis
-          axios.get("https://"+ watsonUser +":"+ watsonPass +"@gateway.watsonplatform.net/tone-analyzer/api/v3/tone?version=2016-05-19&text=" + lyrics, {   
-            header: "X-Watson-Learning-Opt-Out: true"      
-          })
+          toneAnalyzer.tone(
+            {
+              toneInput: lyrics,
+              contentType: 'text/plain'
+            }
+          )
           .then((response)=> {
               
               let insert = [
@@ -280,7 +290,7 @@ app.get("/lyrics/:song/:artist", (req,res)=>{
               }
               else
               {
-                res.send(response.data.document_tone.tone_categories[0].tones);
+                res.send(response.result.document_tone.tone_categories[0].tones);
               }
             
           })
